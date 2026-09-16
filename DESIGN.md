@@ -40,7 +40,9 @@ discovery app (photos, cards, ratings, a map hero) it is wrong.
 | `--color-warn-bg` | `#E9DDBE` | `#2E271C` | The "no why yet" flag. |
 
 No colour outside this table enters the app. The red is spent on provenance
-and time-sensitive facts (NYT Best, happy hour), never on decoration.
+and time-sensitive facts (NYT Best, Infatuation, happy hour), never on decoration.
+A red badge means the place is on a curated list Nate trusts; the keys live in
+`src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
 
 ## Type
 

@@ -1,5 +1,5 @@
 /* Rounds service worker. Bump CACHE on every ship (the /ship skill does it). */
-const CACHE = 'rounds-v1'
+const CACHE = 'rounds-v2'
 self.addEventListener('install', (e) => { self.skipWaiting() })
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()))

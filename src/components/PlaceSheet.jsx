@@ -2,6 +2,14 @@ import { useEffect, useState } from 'react'
 import { searchPlaces } from '../lib/google'
 import { OCCASIONS } from '../lib/tags'
 
+/* Free text in, a known list key out, so the badge and chip fire. */
+function normalizeSource(v) {
+  const t = v.trim().toLowerCase()
+  if (/^(nyt|nyt best|new york times|times)/.test(t)) return 'nyt'
+  if (/infatuation/.test(t)) return 'infatuation'
+  return v.trim()
+}
+
 const blank = { name: '', hood: '', kind: '', note: '', source: '', tags: [], status: 'want', l_stop: '', happy_hour: '' }
 
 export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete }) {
@@ -39,7 +47,7 @@ export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete })
     setSaving(true); setError(null)
     const row = {
       name: form.name.trim(), hood: form.hood.trim(), kind: form.kind.trim(), note: form.note.trim(),
-      source: form.source.trim().toLowerCase() === 'nyt best' ? 'nyt' : form.source.trim(),
+      source: normalizeSource(form.source),
       tags: form.tags, status: form.status, l_stop: form.l_stop.trim() || null, happy_hour: form.happy_hour.trim() || null,
     }
     if (mode === 'add' && picked) Object.assign(row, {
@@ -91,7 +99,7 @@ export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete })
               ))}
             </div>
             <div className="two">
-              <div><label className="auth-label" htmlFor="f-source">Source</label><input id="f-source" value={form.source} onChange={set('source')} placeholder="NYT Best, a friend, IG" /></div>
+              <div><label className="auth-label" htmlFor="f-source">Source</label><input id="f-source" value={form.source} onChange={set('source')} placeholder="NYT Best, Infatuation, a friend, IG" /></div>
               <div><label className="auth-label" htmlFor="f-status">Status</label>
                 <select id="f-status" value={form.status} onChange={set('status')}>
                   <option value="want">To try</option><option value="fav">Favorite</option><option value="tried">Tried, fine</option><option value="pass">Pass</option>

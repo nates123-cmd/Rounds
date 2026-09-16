@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { usePlaces } from './lib/rounds'
 import { ORIGINS, miles } from './lib/geo'
-import { OCCASIONS, STATUSES } from './lib/tags'
+import { OCCASIONS, STATUSES, LIST_SOURCES } from './lib/tags'
 import { Entry } from './components/Entry'
 import { PlaceSheet } from './components/PlaceSheet'
 import { signOut } from './auth/AuthGate'
@@ -61,7 +61,7 @@ export default function App() {
       const hay = [p.name, p.hood, p.kind, p.note, p.source, p.l_stop, p.happy_hour, (p.tags || []).join(' ')].join(' ').toLowerCase()
       if (!q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false
     }
-    if (occ === 'nyt' ? p.source !== 'nyt' : occ !== 'all' && !(p.tags || []).includes(occ)) return false
+    if (LIST_SOURCES[occ] ? p.source !== occ : occ !== 'all' && !(p.tags || []).includes(occ)) return false
     if (hood !== 'all' && p.hood !== hood) return false
     if (how.has('l') && !p.l_stop) return false
     if (how.has('moped') && !(p.moped_min != null && p.moped_min <= 20)) return false
@@ -116,7 +116,9 @@ export default function App() {
           {occs.map((t) => (
             <button key={t} className="chip" aria-pressed={occ === t} onClick={() => setOcc(t)}>{t}</button>
           ))}
-          <button className="chip" aria-pressed={occ === 'nyt'} onClick={() => setOcc('nyt')}>NYT Best</button>
+          {Object.entries(LIST_SOURCES).map(([k, v]) => (
+            <button key={k} className="chip" aria-pressed={occ === k} onClick={() => setOcc(k)}>{v}</button>
+          ))}
         </div>
         <div className="chips" role="group" aria-label="Getting there">
           <button className="chip how" aria-pressed={how.has('l')} onClick={() => toggleHow('l')}>Off the L</button>

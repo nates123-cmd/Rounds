@@ -9,4 +9,4 @@ export const OCCASIONS = [
 export const STATUSES = { want: 'To try', fav: 'Favorites', tried: 'Tried' }
 
 /** Source tags that earn the red badge. Anything else is shown as plain text. */
-export const LIST_SOURCES = { nyt: 'NYT Best' }
+export const LIST_SOURCES = { nyt: 'NYT Best', infatuation: 'Infatuation' }
