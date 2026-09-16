@@ -9,7 +9,8 @@ Every 10 minutes:
      the US, which is the whole reason Valhalla exists on this box.
   2. Lists (weekly): Infatuation guides via rounds_lists.py, then
      rounds_match_lists() stamps list keys onto matching places.
-  3. Refresh: rows whose Google cache is over 7 days old get hours, price and
+  3. Happy hours (weekly): rounds_hh.py, three aggregators, manual wins.
+  4. Refresh: rows whose Google cache is over 7 days old get hours, price and
      business status again, if GOOGLE_KEY (an IP-restricted server key) is set.
      Without it the browser does the same refresh, just spread across opens.
 
@@ -23,6 +24,7 @@ Env (rounds.env, chmod 600):
 import json, os, sys, time, urllib.request, urllib.error, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rounds_lists import lists_pass
+from rounds_hh import hh_pass
 from datetime import datetime, timezone, timedelta
 
 def env(k, d=None):
@@ -110,7 +112,7 @@ if __name__ == "__main__":
         try:
             route_pass(); refresh_pass()
             if once or time.time() - _last_lists > LISTS_EVERY:
-                lists_pass(sb, log); _last_lists = time.time()
+                lists_pass(sb, log); hh_pass(sb, log); _last_lists = time.time()
         except Exception as e:
             log("pass failed", e)
         if once: break

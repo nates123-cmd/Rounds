@@ -41,7 +41,7 @@ discovery app (photos, cards, ratings, a map hero) it is wrong.
 
 No colour outside this table enters the app. The red is spent on provenance
 and time-sensitive facts (NYT Best, Infatuation, happy hour), never on decoration.
-A red badge means the place is on a curated list Nate trusts; the keys live in
+A BLACK badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the red list badges. A red badge means the place is on a curated list Nate trusts; the keys live in
 `src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
 
 ## Type

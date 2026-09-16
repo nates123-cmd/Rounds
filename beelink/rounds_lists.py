@@ -18,6 +18,10 @@ from datetime import datetime, timezone
 GUIDES = {
     "infatuation": ("The Infatuation: 25 Best Restaurants in NYC", "https://www.theinfatuation.com/new-york/guides/best-restaurants-nyc"),
     "infatuation_hit": ("The Infatuation: NYC Hit List", "https://www.theinfatuation.com/new-york/guides/best-new-new-york-restaurants-hit-list"),
+    "infatuation_bar_hit": ("The Infatuation: NYC Bar Hit List", "https://www.theinfatuation.com/new-york/guides/the-nyc-bar-hit-list"),
+    "infatuation_cocktails": ("The Infatuation: Best Cocktail Bars in NYC", "https://www.theinfatuation.com/new-york/guides/best-cocktail-bars-nyc"),
+    "infatuation_fun": ("The Infatuation: Most Fun Bars in NYC Right Now", "https://www.theinfatuation.com/new-york/guides/best-fun-cool-bars-nyc-right-now"),
+    "infatuation_hh": ("The Infatuation: Best Happy Hours in NYC", "https://www.theinfatuation.com/new-york/guides/happy-hour-nyc"),
 }
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
 

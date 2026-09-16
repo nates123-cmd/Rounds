@@ -41,6 +41,7 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
     <li className={`entry${p.status === 'pass' ? ' is-pass' : ''}${closed ? ' is-closed' : ''}`}>
       <h2 className="name"><button className="name-btn" onClick={onEdit}>{p.name}</button></h2>
       <div className="src-col">
+        {p.rec_by ? <span className="src rec">Rec &middot; {p.rec_by}</span> : null}
         {listsOf(p).map((k) => <span key={k} className="src">{LIST_SOURCES[k]}</span>)}
         {p.source && !LIST_SOURCES[p.source] ? <span className="src soft">{p.source}</span> : null}
         {initial && <span className="who">{initial}</span>}

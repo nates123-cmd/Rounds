@@ -62,7 +62,7 @@ export default function App() {
       const hay = [p.name, p.hood, p.kind, p.note, p.source, p.l_stop, p.happy_hour, (p.tags || []).join(' ')].join(' ').toLowerCase()
       if (!q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false
     }
-    if (LIST_SOURCES[occ] ? !listsOf(p).includes(occ) : occ !== 'all' && !(p.tags || []).includes(occ)) return false
+    if (occ === 'rec' ? !p.rec_by : LIST_SOURCES[occ] ? !listsOf(p).includes(occ) : occ !== 'all' && !(p.tags || []).includes(occ)) return false
     if (hood !== 'all' && p.hood !== hood) return false
     if (how.has('l') && !p.l_stop) return false
     if (how.has('moped') && !(p.moped_min != null && p.moped_min <= 20)) return false
@@ -115,6 +115,7 @@ export default function App() {
         </div>
         <div className="chips" role="group" aria-label="Occasion">
           <button className="chip" aria-pressed={occ === 'all'} onClick={() => setOcc('all')}>All</button>
+          <button className="chip rec" aria-pressed={occ === 'rec'} onClick={() => setOcc('rec')}>Personal recs</button>
           {occs.map((t) => (
             <button key={t} className="chip" aria-pressed={occ === t} onClick={() => setOcc(t)}>{t}</button>
           ))}
@@ -188,6 +189,7 @@ export default function App() {
       {sheet && (
         <PlaceSheet mode={sheet.mode} place={sheet.place} existing={places}
           onClose={() => setSheet(null)}
+          who={who}
           onSave={async (row) => { sheet.mode === 'add' ? await add(row) : await update(sheet.place.id, row); setSheet(null) }}
           onDelete={sheet.mode === 'edit' ? async () => { await remove(sheet.place.id); setSheet(null) } : null} />
       )}

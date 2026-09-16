@@ -38,7 +38,7 @@ export function ListsView({ places, q, onAdd }) {
       const hits = await searchPlaces([e.name, e.hood || e.address, 'New York'].filter(Boolean).join(' '))
       const h = hits[0]
       await onAdd({
-        name: e.name, hood: e.hood || h?.hood || '', kind: e.cuisine || h?.kind || '', note: '', source: '',
+        name: e.name, hood: e.hood || h?.hood || '', kind: e.cuisine || h?.kind || '', note: '', source: '', rec_by: '',
         tags: [], status: 'want', lists: [e.list_key],
         ...(h ? { google_place_id: h.google_place_id, lat: h.lat, lng: h.lng, business_status: h.business_status, google: h.google } : {}),
       })

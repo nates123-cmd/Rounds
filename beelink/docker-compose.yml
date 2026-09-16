@@ -9,4 +9,5 @@ services:
     volumes:
       - ./rounds_poller.py:/app/rounds_poller.py:ro
       - ./rounds_lists.py:/app/rounds_lists.py:ro
+      - ./rounds_hh.py:/app/rounds_hh.py:ro
     command: ["python3", "-u", "/app/rounds_poller.py"]

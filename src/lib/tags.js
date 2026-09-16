@@ -9,7 +9,15 @@ export const OCCASIONS = [
 export const STATUSES = { want: 'To try', fav: 'Favorites', tried: 'Tried' }
 
 /** Source tags that earn the red badge. Anything else is shown as plain text. */
-export const LIST_SOURCES = { nyt: 'NYT Best', infatuation: 'Infatuation', infatuation_hit: 'Hit List' }
+export const LIST_SOURCES = {
+  nyt: 'NYT Best',
+  infatuation: 'Infatuation',
+  infatuation_hit: 'Hit List',
+  infatuation_bar_hit: 'Bar Hit List',
+  infatuation_cocktails: 'Inf. Cocktails',
+  infatuation_fun: 'Inf. Fun Bars',
+  infatuation_hh: 'Inf. Happy Hours',
+}
 
 /** Every list key a place is on: the scraped `lists` plus a hand-typed source that names a list. */
 export function listsOf(p) {

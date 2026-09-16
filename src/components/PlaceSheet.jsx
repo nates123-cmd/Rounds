@@ -10,14 +10,23 @@ function normalizeSource(v) {
   return v.trim()
 }
 
-const blank = { name: '', hood: '', kind: '', note: '', source: '', tags: [], status: 'want', l_stop: '', happy_hour: '' }
+const blank = { name: '', hood: '', kind: '', note: '', source: '', rec_by: '', tags: [], status: 'want', l_stop: '', happy_hour: '' }
 
-export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete }) {
+/* The suite login is an email; the person is the bit before the @, capitalised. Amanda is Amanda, Nate is Nate. */
+const firstName = (who) => {
+  const e = who?.email || ''
+  const n = e.split('@')[0].split(/[._-]/)[0]
+  if (/kalb|amanda/i.test(e)) return 'Amanda'
+  if (/nates?123|nate/i.test(e)) return 'Nate'
+  return n ? n[0].toUpperCase() + n.slice(1) : ''
+}
+
+export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDelete }) {
   const [q, setQ] = useState('')
   const [hits, setHits] = useState([])
   const [searching, setSearching] = useState(false)
   const [picked, setPicked] = useState(mode === 'edit' ? place : null)
-  const [form, setForm] = useState(mode === 'edit' ? { ...blank, ...place } : blank)
+  const [form, setForm] = useState(mode === 'edit' ? { ...blank, ...place } : { ...blank, rec_by: firstName(who) })
   const [error, setError] = useState(null)
   const [saving, setSaving] = useState(false)
 
@@ -48,8 +57,11 @@ export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete })
     const row = {
       name: form.name.trim(), hood: form.hood.trim(), kind: form.kind.trim(), note: form.note.trim(),
       source: normalizeSource(form.source),
+      rec_by: (form.rec_by || '').trim(),
       tags: form.tags, status: form.status, l_stop: form.l_stop.trim() || null, happy_hour: form.happy_hour.trim() || null,
     }
+    if (mode === 'edit' && (form.happy_hour || '').trim() !== (place.happy_hour || '')) row.happy_hour_source = row.happy_hour ? 'manual' : null
+    if (mode === 'add' && (form.happy_hour || '').trim()) row.happy_hour_source = 'manual'
     if (mode === 'add' && picked) Object.assign(row, {
       google_place_id: picked.google_place_id, lat: picked.lat, lng: picked.lng, business_status: picked.business_status, google: picked.google,
     })
@@ -99,11 +111,15 @@ export function PlaceSheet({ mode, place, existing, onClose, onSave, onDelete })
               ))}
             </div>
             <div className="two">
-              <div><label className="auth-label" htmlFor="f-source">Source</label><input id="f-source" value={form.source} onChange={set('source')} placeholder="NYT Best, Infatuation, a friend, IG" /></div>
+              <div><label className="auth-label" htmlFor="f-rec">Rec'd by</label><input id="f-rec" value={form.rec_by || ''} onChange={set('rec_by')} placeholder="Nate, Amanda, a friend's name" /></div>
               <div><label className="auth-label" htmlFor="f-status">Status</label>
                 <select id="f-status" value={form.status} onChange={set('status')}>
                   <option value="want">To try</option><option value="fav">Favorite</option><option value="tried">Tried, fine</option><option value="pass">Pass</option>
                 </select></div>
+            </div>
+            <div className="two">
+              <div><label className="auth-label" htmlFor="f-source">Source</label><input id="f-source" value={form.source} onChange={set('source')} placeholder="NYT Best, Infatuation, IG" /></div>
+              <div><label className="auth-label" htmlFor="f-kind2">&nbsp;</label><div className="auth-note">Rec'd by is a person. Source is where you saw it.</div></div>
             </div>
             <div className="two">
               <div><label className="auth-label" htmlFor="f-l">L stop</label><input id="f-l" value={form.l_stop || ''} onChange={set('l_stop')} placeholder="Bedford" /></div>
