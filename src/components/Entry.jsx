@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { openNow, PRICE } from '../lib/hours'
 import { fmtMiles } from '../lib/geo'
-import { LIST_SOURCES } from '../lib/tags'
+import { LIST_SOURCES, listsOf } from '../lib/tags'
 
 export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   const [verdict, setVerdict] = useState(null) // null | { pick, line }
@@ -41,8 +41,8 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
     <li className={`entry${p.status === 'pass' ? ' is-pass' : ''}${closed ? ' is-closed' : ''}`}>
       <h2 className="name"><button className="name-btn" onClick={onEdit}>{p.name}</button></h2>
       <div className="src-col">
-        {LIST_SOURCES[p.source] ? <span className="src">{LIST_SOURCES[p.source]}</span>
-          : p.source ? <span className="src soft">{p.source}</span> : null}
+        {listsOf(p).map((k) => <span key={k} className="src">{LIST_SOURCES[k]}</span>)}
+        {p.source && !LIST_SOURCES[p.source] ? <span className="src soft">{p.source}</span> : null}
         {initial && <span className="who">{initial}</span>}
       </div>
       <div className="hood">

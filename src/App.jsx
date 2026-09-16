@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { usePlaces } from './lib/rounds'
 import { ORIGINS, miles } from './lib/geo'
-import { OCCASIONS, STATUSES, LIST_SOURCES } from './lib/tags'
+import { OCCASIONS, STATUSES, LIST_SOURCES, listsOf } from './lib/tags'
+import { ListsView } from './components/ListsView'
 import { Entry } from './components/Entry'
 import { PlaceSheet } from './components/PlaceSheet'
 import { signOut } from './auth/AuthGate'
@@ -61,7 +62,7 @@ export default function App() {
       const hay = [p.name, p.hood, p.kind, p.note, p.source, p.l_stop, p.happy_hour, (p.tags || []).join(' ')].join(' ').toLowerCase()
       if (!q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false
     }
-    if (LIST_SOURCES[occ] ? p.source !== occ : occ !== 'all' && !(p.tags || []).includes(occ)) return false
+    if (LIST_SOURCES[occ] ? !listsOf(p).includes(occ) : occ !== 'all' && !(p.tags || []).includes(occ)) return false
     if (hood !== 'all' && p.hood !== hood) return false
     if (how.has('l') && !p.l_stop) return false
     if (how.has('moped') && !(p.moped_min != null && p.moped_min <= 20)) return false
@@ -106,6 +107,7 @@ export default function App() {
               {v} <b>{counts[k]}</b>
             </button>
           ))}
+          <button className="view" role="tab" aria-selected={view === 'lists'} onClick={() => setView('lists')}>Lists</button>
         </div>
         <div className="search">
           <input id="q" type="search" value={q} onChange={(e) => setQ(e.target.value)}
@@ -134,6 +136,9 @@ export default function App() {
         </div>
       </header>
 
+      {view === 'lists' ? (
+        <ListsView places={places} q={q} onAdd={add} />
+      ) : (<>
       <div className="count">
         <div>
           {loading ? 'Loading' : <><b>{total}</b> {label}{tail.length ? <>, <b>{tail.length}</b> with no why</> : null}</>}
@@ -168,6 +173,8 @@ export default function App() {
           </ul>
         </>
       )}
+
+      </>)}
 
       <p className="foot">
         Hours and price come from Google and refresh weekly. Distance is straight-line from the chosen origin; moped minutes are real routes from home.

@@ -8,4 +8,5 @@ services:
     env_file: rounds.env
     volumes:
       - ./rounds_poller.py:/app/rounds_poller.py:ro
+      - ./rounds_lists.py:/app/rounds_lists.py:ro
     command: ["python3", "-u", "/app/rounds_poller.py"]

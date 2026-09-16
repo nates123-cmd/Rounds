@@ -5,3 +5,4 @@ supabase/.temp/
 tools/seed.sql
 tools/resolved.json
 .DS_Store
+tools/nyt.sql

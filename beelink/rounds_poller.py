@@ -7,7 +7,9 @@ Every 10 minutes:
      get moped / bike / drive minutes from home via the local Valhalla
      (motor_scooter, bicycle, auto costings). Google has no two-wheeler mode in
      the US, which is the whole reason Valhalla exists on this box.
-  2. Refresh: rows whose Google cache is over 7 days old get hours, price and
+  2. Lists (weekly): Infatuation guides via rounds_lists.py, then
+     rounds_match_lists() stamps list keys onto matching places.
+  3. Refresh: rows whose Google cache is over 7 days old get hours, price and
      business status again, if GOOGLE_KEY (an IP-restricted server key) is set.
      Without it the browser does the same refresh, just spread across opens.
 
@@ -19,6 +21,8 @@ Env (rounds.env, chmod 600):
   INTERVAL=600
 """
 import json, os, sys, time, urllib.request, urllib.error, urllib.parse
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from rounds_lists import lists_pass
 from datetime import datetime, timezone, timedelta
 
 def env(k, d=None):
@@ -97,11 +101,16 @@ def refresh_pass():
             log("refresh failed", r["name"], e)
         time.sleep(0.3)
 
+LISTS_EVERY = 7 * 24 * 3600
+_last_lists = 0
+
 if __name__ == "__main__":
     once = "--once" in sys.argv
     while True:
         try:
             route_pass(); refresh_pass()
+            if once or time.time() - _last_lists > LISTS_EVERY:
+                lists_pass(sb, log); _last_lists = time.time()
         except Exception as e:
             log("pass failed", e)
         if once: break
