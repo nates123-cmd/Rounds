@@ -59,7 +59,7 @@ for (const s of seed) {
     maps_uri: details.googleMapsUri || null, website: details.websiteUri || null,
   } : {}
   out.push(`insert into public.rounds_places (owner_id, added_by, google_place_id, name, hood, kind, note, source, tags, status, lat, lng, l_stop, happy_hour, happy_hour_source, business_status, google) values (` +
-    [sq(OWNER), sq(OWNER), sq(hit?.id || null), sq(hit?.displayName?.text || s.name), sq(s.hood || hoodFrom(hit?.addressComponents)),
+    [sq(OWNER), sq(OWNER), sq(hit?.id || null), sq(s.name), sq(s.hood || hoodFrom(hit?.addressComponents)),
       sq(s.kind || hit?.primaryTypeDisplayName?.text || ''), sq(s.note || ''), sq(s.source || ''), arr(s.tags || []), sq(s.status || 'want'),
       hit?.location?.latitude ?? 'null', hit?.location?.longitude ?? 'null', sq(s.l_stop || null), sq(s.happy_hour || null),
       sq(s.happy_hour ? 'seed' : null), sq(details?.businessStatus || null), sq(JSON.stringify(google)) + '::jsonb',
