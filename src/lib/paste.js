@@ -78,6 +78,7 @@ export async function parsePaste(text, onStatus = () => {}) {
   for (const u of urls) note = note.replace(u, ' ')
   note = note.replace(/\s+/g, ' ').trim()
   const recBy = guessRecBy(note)
+  if (recBy) note = note.replace(new RegExp(`\\b(?:from|per|via|rec(?:ommended|'d)? by)\\s+${recBy}\\b`, 'g'), '').replace(/\s+/g, ' ').trim()
   const address = note.match(/\b\d{1,5}(?:-\d{1,4})?\s+[A-Z][\w.'-]*(?:\s+[A-Z][\w.'-]*){0,3}\s+(?:St|Street|Ave|Avenue|Blvd|Boulevard|Rd|Road|Pl|Place|Dr|Drive|Broadway|Bowery|Ln|Lane)\b\.?/)
   const query = mapsPlace?.name || (titles[0] ? titles[0].split(/[|\-–]/)[0].trim() : '') || address?.[0] || ''
   return { links, mapsPlace, note, recBy, query, urls }
