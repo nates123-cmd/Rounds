@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { searchPlaces } from '../lib/google'
+import { parsePaste, extractUrls, kindOf } from '../lib/paste'
 import { OCCASIONS } from '../lib/tags'
 
 /* Free text in, a known list key out, so the badge and chip fire. */
@@ -10,7 +11,7 @@ function normalizeSource(v) {
   return v.trim()
 }
 
-const blank = { name: '', hood: '', kind: '', note: '', source: '', rec_by: '', tags: [], status: 'want', l_stop: '', happy_hour: '' }
+const blank = { name: '', hood: '', kind: '', note: '', source: '', rec_by: '', tags: [], status: 'want', l_stop: '', happy_hour: '', links: {} }
 
 /* The suite login is an email; the person is the bit before the @, capitalised. Amanda is Amanda, Nate is Nate. */
 const firstName = (who) => {
@@ -29,9 +30,11 @@ export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDele
   const [form, setForm] = useState(mode === 'edit' ? { ...blank, ...place } : { ...blank, rec_by: firstName(who) })
   const [error, setError] = useState(null)
   const [saving, setSaving] = useState(false)
+  const [status, setStatus] = useState('')
+  const [pasted, setPasted] = useState(false)
 
   useEffect(() => {
-    if (mode !== 'add' || picked || q.trim().length < 2) { setHits([]); return }
+    if (mode !== 'add' || picked || q.trim().length < 2 || extractUrls(q).length) { setHits([]); return }
     const t = setTimeout(async () => {
       setSearching(true)
       try { setHits(await searchPlaces(q)) } catch (e) { setError(e.message) }
@@ -39,6 +42,34 @@ export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDele
     }, 450)
     return () => clearTimeout(t)
   }, [q, mode, picked])
+
+  /* Paste mode: anything with a link in it. Resolve, prefill, then let the
+   * normal Google search find the place if the Maps link did not. */
+  const handlePaste = async (text) => {
+    setPasted(true); setError(null)
+    try {
+      const r = await parsePaste(text, setStatus)
+      setStatus('')
+      const note = r.note.length > 200 ? r.note.slice(0, 200) : r.note
+      setForm((f) => ({ ...f, links: { ...f.links, ...r.links }, note: f.note || note, rec_by: r.recBy || f.rec_by }))
+      if (r.query) {
+        setStatus('Looking up ' + r.query)
+        const hits = await searchPlaces(r.query + (r.mapsPlace?.lat ? '' : ' New York'))
+        setStatus('')
+        let h = hits[0]
+        if (r.mapsPlace?.lat && hits.length) {
+          h = hits.reduce((a, b) => (Math.abs(b.lat - r.mapsPlace.lat) + Math.abs(b.lng - r.mapsPlace.lng) < Math.abs(a.lat - r.mapsPlace.lat) + Math.abs(a.lng - r.mapsPlace.lng) ? b : a))
+        }
+        if (h) { pick(h); return }
+        setQ(r.query)
+      } else if (!Object.keys(r.links).length) {
+        setQ(text)
+      } else {
+        setQ('')
+        setPicked({}); setForm((f) => ({ ...f, name: f.name || '' }))
+      }
+    } catch (e) { setStatus(''); setError(e.message) }
+  }
 
   const pick = (h) => {
     const dupe = existing.find((p) => p.google_place_id === h.google_place_id)
@@ -57,7 +88,7 @@ export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDele
     const row = {
       name: form.name.trim(), hood: form.hood.trim(), kind: form.kind.trim(), note: form.note.trim(),
       source: normalizeSource(form.source),
-      rec_by: (form.rec_by || '').trim(),
+      rec_by: (form.rec_by || '').trim(), links: form.links || {},
       tags: form.tags, status: form.status, l_stop: form.l_stop.trim() || null, happy_hour: form.happy_hour.trim() || null,
     }
     if (mode === 'edit' && (form.happy_hour || '').trim() !== (place.happy_hour || '')) row.happy_hour_source = row.happy_hour ? 'manual' : null
@@ -78,8 +109,11 @@ export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDele
 
         {mode === 'add' && !picked && (
           <>
-            <input id="place-q" type="search" autoFocus autoComplete="off" value={q} onChange={(e) => setQ(e.target.value)}
-              placeholder="Name, then a neighborhood if it helps" />
+            <textarea id="place-q" rows={2} autoFocus autoComplete="off" value={q}
+              onChange={(e) => { const v = e.target.value; setQ(v); if (!pasted && extractUrls(v).length) handlePaste(v) }}
+              onPaste={(e) => { const v = e.clipboardData.getData('text'); if (extractUrls(v).length || v.length > 60) { e.preventDefault(); setQ(v); handlePaste(v) } }}
+              placeholder="Type a name, or paste anything: a Maps link, a text from a friend, a menu, a Resy page" />
+            {status && <div className="auth-note">{status}</div>}
             <ul className="hits">
               {searching && <li className="hit muted">Searching</li>}
               {hits.map((h) => (
@@ -104,6 +138,21 @@ export function PlaceSheet({ mode, place, existing, who, onClose, onSave, onDele
             </div>
             <label className="auth-label" htmlFor="f-note">{form.status === 'fav' ? 'Go back for' : 'Why it is on the list'}</label>
             <input id="f-note" value={form.note} onChange={set('note')} placeholder="one line, future you will thank you" />
+            {Object.keys(form.links || {}).length > 0 && (
+              <>
+                <label className="auth-label">Links</label>
+                <div className="linkrow">
+                  {Object.entries(form.links).map(([k, u]) => (
+                    <span key={k} className="linkchip"><a href={u} target="_blank" rel="noreferrer">{k}</a>
+                      <button type="button" aria-label={`remove ${k} link`} onClick={() => setForm((f) => { const l = { ...f.links }; delete l[k]; return { ...f, links: l } })}>&times;</button></span>
+                  ))}
+                </div>
+              </>
+            )}
+            <input id="f-link" type="url" placeholder="Paste another link: menu, Resy, article" onKeyDown={(e) => {
+              if (e.key !== 'Enter') return; e.preventDefault(); const u = e.target.value.trim(); if (!/^https?:/.test(u)) return
+              setForm((f) => ({ ...f, links: { ...f.links, [kindOf(u)]: u } })); e.target.value = ''
+            }} />
             <label className="auth-label">Tags</label>
             <div className="tagpick">
               {OCCASIONS.map((t) => (

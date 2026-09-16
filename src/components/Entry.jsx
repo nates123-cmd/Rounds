@@ -55,7 +55,11 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
       {why}
       <div className="meta">{meta.map((m, i) => <span key={i}>{i ? <span className="sep">&middot;</span> : null}{m}</span>)}</div>
       <div className="acts">
-        {p.google?.maps_uri && <a className="went" href={p.google.maps_uri} target="_blank" rel="noreferrer">Go</a>}
+        {(p.links?.maps || p.google?.maps_uri) && <a className="went" href={p.links?.maps || p.google.maps_uri} target="_blank" rel="noreferrer">Go</a>}
+        {p.links?.menu && <a className="went" href={p.links.menu} target="_blank" rel="noreferrer">Menu</a>}
+        {p.links?.reserve && <a className="went" href={p.links.reserve} target="_blank" rel="noreferrer">Book</a>}
+        {p.links?.article && <a className="went" href={p.links.article} target="_blank" rel="noreferrer">Read</a>}
+        {p.links?.website && !p.links?.menu && <a className="went" href={p.links.website} target="_blank" rel="noreferrer">Site</a>}
         <button className="went" type="button" aria-expanded={!!verdict}
           onClick={() => setVerdict((v) => (v ? null : { pick: p.status === 'fav' ? 'fav' : '', line: '' }))}>
           {p.status === 'want' ? 'Went?' : 'Went again'}
