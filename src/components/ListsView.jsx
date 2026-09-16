@@ -9,7 +9,7 @@ import { supabase } from '../lib/supabase'
 import { searchPlaces } from '../lib/google'
 import { LIST_SOURCES, listsOf } from '../lib/tags'
 
-const norm = (t) => (t || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '')
+const norm = (t) => (t || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/^the\s+/, '').replace(/[^a-z0-9]/g, '')
 
 export function ListsView({ places, q, onAdd }) {
   const [entries, setEntries] = useState([])

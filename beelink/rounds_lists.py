@@ -23,7 +23,7 @@ UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML,
 
 def norm(t):
     t = unicodedata.normalize("NFKD", html.unescape(t or "")).encode("ascii", "ignore").decode()
-    return re.sub(r"[^a-z0-9]", "", t.lower())
+    return re.sub(r"[^a-z0-9]", "", re.sub(r"^the\s+", "", t.lower()))
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})

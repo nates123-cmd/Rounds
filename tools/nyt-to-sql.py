@@ -4,7 +4,7 @@ Apply: cd ~/Desktop/today-app && supabase db query --linked -f ~/Desktop/rounds-
 import json, re, sys, unicodedata
 year = sys.argv[1] if len(sys.argv) > 1 else '2026'
 rows = json.load(open(f'data/nyt-{year}.json'))
-def norm(t): return re.sub(r'[^a-z0-9]', '', unicodedata.normalize('NFKD', t).encode('ascii', 'ignore').decode().lower())
+def norm(t): return re.sub(r'[^a-z0-9]', '', re.sub(r'^the\s+', '', unicodedata.normalize('NFKD', t).encode('ascii', 'ignore').decode().lower()))
 sq = lambda s: "'" + str(s).replace("'", "''") + "'"
 url = f'https://www.nytimes.com/interactive/{year}/dining/best-nyc-restaurants.html'
 vals = []

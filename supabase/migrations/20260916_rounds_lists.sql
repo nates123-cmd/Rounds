@@ -41,7 +41,7 @@ alter table public.rounds_places add column if not exists lists text[] not null 
 
 create or replace function public.rounds_norm(t text) returns text
 language sql immutable as $$
-  select regexp_replace(lower(unaccent(coalesce(t, ''))), '[^a-z0-9]', '', 'g')
+  select regexp_replace(regexp_replace(lower(unaccent(coalesce(t, ''))), '^the\s+', ''), '[^a-z0-9]', '', 'g')
 $$;
 
 -- Match active list entries to places by normalized name and stamp the list
