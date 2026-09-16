@@ -1,0 +1,1147 @@
+[
+ {
+  "name": "KazuNori",
+  "hood": "West Village",
+  "kind": "Hand rolls",
+  "note": "handroll bar, counter seats",
+  "source": "",
+  "tags": [
+   "date",
+   "solo",
+   "counter",
+   "walk-in",
+   "lunch"
+  ],
+  "l_stop": "6 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Kelang",
+  "hood": "Greenpoint",
+  "kind": "Malaysian",
+  "note": "new Malaysian spot",
+  "source": "new",
+  "tags": [
+   "group",
+   "walk-in"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Momo Sushi Shack",
+  "hood": "Bushwick",
+  "kind": "Sushi",
+  "note": "Morgan stop, good sushi",
+  "source": "",
+  "tags": [
+   "date",
+   "group",
+   "late"
+  ],
+  "l_stop": "Morgan",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Szechuan Mountain House",
+  "hood": "East Village",
+  "kind": "Sichuan",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "group",
+   "late"
+  ],
+  "l_stop": "1 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "King",
+  "hood": "SoHo",
+  "kind": "Mediterranean",
+  "note": "pasta and salad noted",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "fancy",
+   "reservation",
+   "wine"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ha's Snack Bar",
+  "hood": "LES",
+  "kind": "Vietnamese",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "walk-in",
+   "late",
+   "wine",
+   "group"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Semma",
+  "hood": "West Village",
+  "kind": "Indian",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "fancy",
+   "reservation"
+  ],
+  "l_stop": "6 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Cafe Mado",
+  "hood": "Prospect Heights",
+  "kind": "French / New American",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "brunch",
+   "wine"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Chez Ma Tante",
+  "hood": "Greenpoint",
+  "kind": "Bistro",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "brunch",
+   "wine"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Court Street Grocers",
+  "hood": "Carroll Gardens",
+  "kind": "Sandwiches",
+  "note": "sammies",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "sandwich",
+   "lunch",
+   "solo"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Dhamaka",
+  "hood": "LES",
+  "kind": "Indian",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "group",
+   "reservation"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Sailor",
+  "hood": "Fort Greene",
+  "kind": "English",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "reservation",
+   "wine"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Salty Lunch Lady's Little Luncheonette",
+  "hood": "Ridgewood",
+  "kind": "Sandwiches / cakes",
+  "note": "sammys and cakes",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "sandwich",
+   "lunch",
+   "dessert",
+   "solo"
+  ],
+  "l_stop": "Halsey",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Third Falcon",
+  "hood": "Fort Greene",
+  "kind": "French",
+  "note": "",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "date",
+   "fancy"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Margot",
+  "hood": "Fort Greene",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "wine",
+   "walk-in"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Mono Mono",
+  "hood": "East Village",
+  "kind": "Korean fried chicken",
+  "note": "date spot, vinyl wall",
+  "source": "",
+  "tags": [
+   "date",
+   "late",
+   "beer"
+  ],
+  "l_stop": "1 Av",
+  "happy_hour": "4 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Maison Premiere",
+  "hood": "Williamsburg",
+  "kind": "Oysters / wine",
+  "note": "oyster and wine bar",
+  "source": "",
+  "tags": [
+   "wine",
+   "date",
+   "oysters",
+   "patio",
+   "cocktails"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": "4 to 7p $1 oysters",
+  "status": "want"
+ },
+ {
+  "name": "Recette",
+  "hood": "Williamsburg",
+  "kind": "French",
+  "note": "live jazz",
+  "source": "",
+  "tags": [
+   "jazz",
+   "live music",
+   "date",
+   "fancy"
+  ],
+  "l_stop": "Lorimer",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Have & Meyer",
+  "hood": "Williamsburg",
+  "kind": "Wine bar",
+  "note": "next door to Recette",
+  "source": "",
+  "tags": [
+   "wine",
+   "date",
+   "late"
+  ],
+  "l_stop": "Lorimer",
+  "happy_hour": "4 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "La Lanterna di Vittorio",
+  "hood": "Greenwich Village",
+  "kind": "Italian",
+  "note": "pasta flights, live jazz, lantern lit",
+  "source": "",
+  "tags": [
+   "jazz",
+   "live music",
+   "date",
+   "late",
+   "patio"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Soda Club",
+  "hood": "East Village",
+  "kind": "Italian",
+  "note": "pasta tastings",
+  "source": "",
+  "tags": [
+   "date",
+   "wine",
+   "tasting",
+   "late"
+  ],
+  "l_stop": "1 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Hidden Pearl",
+  "hood": "Greenpoint",
+  "kind": "Cocktails",
+  "note": "cocktail bar behind a ramen shop",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "date",
+   "late"
+  ],
+  "l_stop": null,
+  "happy_hour": "5 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Miss Ada",
+  "hood": "Clinton Hill",
+  "kind": "Mediterranean",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "patio",
+   "group"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Coby Club",
+  "hood": "Tribeca",
+  "kind": "Jazz club",
+  "note": "jazz club / bar",
+  "source": "",
+  "tags": [
+   "jazz",
+   "live music",
+   "cocktails",
+   "late"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Somewhere Nowhere",
+  "hood": "Chelsea",
+  "kind": "Jazz / rooftop",
+  "note": "jazz club / bar",
+  "source": "",
+  "tags": [
+   "jazz",
+   "live music",
+   "rooftop",
+   "cocktails",
+   "late"
+  ],
+  "l_stop": "8 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "The Django",
+  "hood": "Tribeca",
+  "kind": "Jazz club",
+  "note": "jazz club / bar",
+  "source": "",
+  "tags": [
+   "jazz",
+   "live music",
+   "cocktails",
+   "late",
+   "date"
+  ],
+  "l_stop": null,
+  "happy_hour": "5 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Antidote",
+  "hood": "Williamsburg",
+  "kind": "Chinese",
+  "note": "",
+  "source": "",
+  "tags": [
+   "group",
+   "late"
+  ],
+  "l_stop": "Graham",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Winona's",
+  "hood": "Bed-Stuy",
+  "kind": "New American",
+  "note": "fancy bistro",
+  "source": "",
+  "tags": [
+   "date",
+   "fancy",
+   "brunch"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Four Horsemen",
+  "hood": "Williamsburg",
+  "kind": "Wine bar",
+  "note": "",
+  "source": "",
+  "tags": [
+   "wine",
+   "date",
+   "walk-in"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Double Chicken Please",
+  "hood": "LES",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "late",
+   "group"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Katana Kitten",
+  "hood": "West Village",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "late",
+   "group"
+  ],
+  "l_stop": "8 Av",
+  "happy_hour": "5 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Attaboy",
+  "hood": "LES",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "date",
+   "late",
+   "walk-in"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Overstory",
+  "hood": "FiDi",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "date",
+   "fancy",
+   "rooftop",
+   "reservation"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Dante",
+  "hood": "West Village",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "patio",
+   "brunch"
+  ],
+  "l_stop": null,
+  "happy_hour": "4 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Employees Only",
+  "hood": "West Village",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "late"
+  ],
+  "l_stop": "8 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Bar Laika",
+  "hood": "Greenpoint",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "late",
+   "solo"
+  ],
+  "l_stop": null,
+  "happy_hour": "5 to 8p",
+  "status": "want"
+ },
+ {
+  "name": "Hart's",
+  "hood": "Crown Heights",
+  "kind": "Mediterranean",
+  "note": "on Franklin Ave",
+  "source": "",
+  "tags": [
+   "date",
+   "wine",
+   "walk-in"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Cadence",
+  "hood": "East Village",
+  "kind": "Soul food",
+  "note": "fancy, vegan options",
+  "source": "",
+  "tags": [
+   "date",
+   "vegan",
+   "fancy"
+  ],
+  "l_stop": "1 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Shukette",
+  "hood": "Chelsea",
+  "kind": "Middle Eastern",
+  "note": "",
+  "source": "",
+  "tags": [
+   "group",
+   "patio"
+  ],
+  "l_stop": "8 Av",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Tokyo Record Bar",
+  "hood": "West Village",
+  "kind": "Cocktails / listening",
+  "note": "small intimate spot",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "date",
+   "listening bar",
+   "tasting",
+   "reservation"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Bar Blondeau",
+  "hood": "Williamsburg",
+  "kind": "Wine bar",
+  "note": "wine bar, apps",
+  "source": "",
+  "tags": [
+   "wine",
+   "date",
+   "rooftop",
+   "cocktails"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Testo",
+  "hood": "Williamsburg",
+  "kind": "Italian",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "group"
+  ],
+  "l_stop": "Lorimer",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Amituofu",
+  "hood": "Bushwick",
+  "kind": "Vegan Chinese",
+  "note": "",
+  "source": "",
+  "tags": [
+   "vegan",
+   "group",
+   "lunch"
+  ],
+  "l_stop": "Jefferson",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Mano's Pizzeria",
+  "hood": "Ridgewood",
+  "kind": "Pizza",
+  "note": "NYT ranked",
+  "source": "nyt",
+  "tags": [
+   "nyt",
+   "pizza",
+   "lunch",
+   "walk-in"
+  ],
+  "l_stop": "Myrtle-Wyckoff",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "I Like Food",
+  "hood": "Ridgewood",
+  "kind": "Bar food",
+  "note": "",
+  "source": "",
+  "tags": [
+   "dive",
+   "beer",
+   "late",
+   "group"
+  ],
+  "l_stop": "Myrtle-Wyckoff",
+  "happy_hour": "4 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Sauced",
+  "hood": "Williamsburg",
+  "kind": "Wine bar",
+  "note": "wine on tap",
+  "source": "",
+  "tags": [
+   "wine",
+   "late",
+   "solo"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": "5 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Rocco's",
+  "hood": "Rockaway Beach",
+  "kind": "Pizza",
+  "note": "beach pizza",
+  "source": "",
+  "tags": [
+   "pizza",
+   "patio",
+   "group"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Flying Fox Tavern",
+  "hood": "Ridgewood",
+  "kind": "Pub",
+  "note": "",
+  "source": "",
+  "tags": [
+   "beer",
+   "patio",
+   "late",
+   "group"
+  ],
+  "l_stop": "Halsey",
+  "happy_hour": "4 to 7p",
+  "status": "want"
+ },
+ {
+  "name": "Cozy Corner",
+  "hood": "Ridgewood",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "dive",
+   "beer",
+   "late"
+  ],
+  "l_stop": "Myrtle-Wyckoff",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Merv's",
+  "hood": "Bushwick",
+  "kind": "Tiki bar",
+  "note": "Myrtle Ave tiki bar",
+  "source": "",
+  "tags": [
+   "tiki",
+   "cocktails",
+   "late"
+  ],
+  "l_stop": "Myrtle-Wyckoff",
+  "happy_hour": "5 to 8p",
+  "status": "want"
+ },
+ {
+  "name": "Okonomi",
+  "hood": "Williamsburg",
+  "kind": "Japanese",
+  "note": "",
+  "source": "",
+  "tags": [
+   "brunch",
+   "lunch",
+   "walk-in",
+   "solo"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Traif",
+  "hood": "Williamsburg",
+  "kind": "Small plates",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "group",
+   "tasting"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "St. Anselm",
+  "hood": "Williamsburg",
+  "kind": "Steakhouse",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "walk-in",
+   "group"
+  ],
+  "l_stop": "Lorimer",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ayat",
+  "hood": "Bushwick",
+  "kind": "Palestinian",
+  "note": "",
+  "source": "",
+  "tags": [
+   "group",
+   "late"
+  ],
+  "l_stop": "DeKalb",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Olmo",
+  "hood": "Bed-Stuy",
+  "kind": "Mediterranean",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "patio"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Mesiba",
+  "hood": "Williamsburg",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "group",
+   "late",
+   "fancy"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Mao Mao",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Hamburger America",
+  "hood": "SoHo",
+  "kind": "Burgers",
+  "note": "",
+  "source": "",
+  "tags": [
+   "lunch",
+   "counter",
+   "solo"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Antica Trattoria",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Theodora",
+  "hood": "Fort Greene",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "wine",
+   "walk-in"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ringo Levio",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ceres",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Gordo's Cantina",
+  "hood": "Ridgewood",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "group",
+   "late"
+  ],
+  "l_stop": "Myrtle-Wyckoff",
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ltauha",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Masalawala",
+  "hood": "Park Slope",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "group",
+   "date"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "The Noble",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Borgo",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Inday",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "lunch",
+   "solo"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Pizzeria Marina",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [
+   "pizza"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Hi-Nod",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Four & Twenty Blackbirds",
+  "hood": "Gowanus",
+  "kind": "Pie",
+  "note": "",
+  "source": "",
+  "tags": [
+   "dessert",
+   "coffee",
+   "solo"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Il Gigante",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Ciao Ciao Disco",
+  "hood": "",
+  "kind": "",
+  "note": "",
+  "source": "",
+  "tags": [],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "want"
+ },
+ {
+  "name": "Fresh Kills",
+  "hood": "Williamsburg",
+  "kind": "Cocktails",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "date",
+   "late",
+   "walk-in"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": "5 to 7p, $10 cocktails",
+  "status": "fav"
+ },
+ {
+  "name": "Hole in the Wall",
+  "hood": "Williamsburg",
+  "kind": "Cafe / bar",
+  "note": "",
+  "source": "",
+  "tags": [
+   "cocktails",
+   "coffee",
+   "brunch",
+   "group",
+   "patio"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": "Mon to Fri 4 to 6p, $10 espresso martinis, $5 drafts",
+  "status": "fav"
+ },
+ {
+  "name": "The Snail",
+  "hood": "Greenpoint",
+  "kind": "American bistro",
+  "note": "",
+  "source": "",
+  "tags": [
+   "date",
+   "walk-in",
+   "brunch",
+   "wine",
+   "cocktails"
+  ],
+  "l_stop": null,
+  "happy_hour": null,
+  "status": "fav"
+ },
+ {
+  "name": "Keg & Lantern Southside",
+  "hood": "Williamsburg",
+  "kind": "Brewery / sports bar",
+  "note": "",
+  "source": "",
+  "tags": [
+   "sports bar",
+   "beer",
+   "group",
+   "patio",
+   "late"
+  ],
+  "l_stop": "Bedford",
+  "happy_hour": null,
+  "status": "want"
+ }
+]

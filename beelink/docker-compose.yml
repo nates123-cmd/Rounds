@@ -1,0 +1,11 @@
+# ~/apps/rounds-poller on the Beelink. Talks to Valhalla on the host network.
+services:
+  rounds-poller:
+    image: python:3.12-slim
+    container_name: rounds-poller
+    network_mode: host
+    restart: unless-stopped
+    env_file: rounds.env
+    volumes:
+      - ./rounds_poller.py:/app/rounds_poller.py:ro
+    command: ["python3", "-u", "/app/rounds_poller.py"]

@@ -1,0 +1,7 @@
+.env
+node_modules/
+dist/
+supabase/.temp/
+tools/seed.sql
+tools/resolved.json
+.DS_Store

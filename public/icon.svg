@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#F1EADB"/>
+  <rect x="0" y="352" width="512" height="10" fill="#1C1712"/>
+  <text x="44" y="330" font-family="Archivo Narrow, Arial Narrow, Helvetica Neue, Arial, sans-serif" font-weight="700" font-size="232" letter-spacing="-6" fill="#1C1712">R<tspan fill="#B4261C">O</tspan></text>
+  <text x="46" y="440" font-family="Archivo Narrow, Arial Narrow, Helvetica Neue, Arial, sans-serif" font-weight="700" font-size="54" letter-spacing="8" fill="#8A7D6A">ROUNDS</text>
+</svg>
