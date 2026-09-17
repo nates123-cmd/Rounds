@@ -88,6 +88,8 @@ export default function App() {
 
   const total = main.length + tail.length
   const label = { want: 'to try', fav: 'favorites', tried: 'tried' }[view]
+  const filtered = occ !== 'all' || how.size > 0 || hood !== 'all' || openOnly || q.trim() !== '' || originId !== 'home'
+  const resetFilters = () => { setOcc('all'); setHow(new Set()); setHood('all'); setOpenOnly(false); setQ(''); setOriginId('home') }
 
   return (
     <div className="app">
@@ -144,9 +146,12 @@ export default function App() {
         <div>
           {loading ? 'Loading' : <><b>{total}</b> {label}{tail.length ? <>, <b>{tail.length}</b> with no why</> : null}</>}
         </div>
-        <button className="toggle" aria-pressed={openOnly} onClick={() => setOpenOnly((v) => !v)}>
-          {openOnly ? 'Showing open now' : 'Open now only'}
-        </button>
+        <div className="count-acts">
+          {filtered && <button className="toggle reset" onClick={resetFilters}>Reset</button>}
+          <button className="toggle" aria-pressed={openOnly} onClick={() => setOpenOnly((v) => !v)}>
+            {openOnly ? 'Showing open now' : 'Open now only'}
+          </button>
+        </div>
       </div>
 
       <ul className="list">

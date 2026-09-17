@@ -65,6 +65,8 @@ input[type="search"] { -webkit-appearance: none; }
 
 .count { display: flex; justify-content: space-between; align-items: baseline; padding-block: 10px 6px; font-size: 12px; color: var(--color-ink-3); letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
 .count b { color: var(--color-ink-2); font-weight: 600; }
+.count-acts { display: flex; gap: 14px; }
+.toggle.reset { color: var(--color-accent); font-weight: 600; }
 .toggle, .link { color: var(--color-ink-2); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; font-size: inherit; }
 .link.danger { color: var(--color-accent); }
 
