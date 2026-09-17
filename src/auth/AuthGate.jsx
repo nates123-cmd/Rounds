@@ -10,6 +10,12 @@ import { supabase } from '../lib/supabase'
 
 const STATES = { loading: 'loading', prompt: 'prompt', code: 'code', ready: 'ready' }
 
+/* Rounds is for two people. Anyone else gets no code and no session, even
+ * though RLS would already show them an empty list. The suite session is
+ * shared across every app on this origin, so a login in Stock or Sip counts. */
+const ALLOWED = ['nates123@gmail.com', 'kalb.amanda@gmail.com']
+const allowed = (email) => ALLOWED.includes((email || '').trim().toLowerCase())
+
 export function AuthGate({ children }) {
   const [state, setState] = useState(STATES.loading)
   const [email, setEmail] = useState('')
@@ -19,20 +25,27 @@ export function AuthGate({ children }) {
 
   useEffect(() => {
     let mounted = true
-    supabase.auth.getSession().then(({ data }) => {
-      if (mounted) setState(data.session ? STATES.ready : STATES.prompt)
-    })
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (mounted) setState(session ? STATES.ready : STATES.prompt)
-    })
+    const settle = async (session) => {
+      if (!mounted) return
+      if (session && !allowed(session.user?.email)) {
+        await supabase.auth.signOut()
+        setError('Rounds is just for Nate and Amanda.')
+        setState(STATES.prompt)
+        return
+      }
+      setState(session ? STATES.ready : STATES.prompt)
+    }
+    supabase.auth.getSession().then(({ data }) => settle(data.session))
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => settle(session))
     return () => { mounted = false; sub.subscription.unsubscribe() }
   }, [])
 
   const sendCode = async (e) => {
     e.preventDefault()
     if (!email || busy) return
+    if (!allowed(email)) { setError('Rounds is just for Nate and Amanda.'); return }
     setBusy(true); setError(null)
-    const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: true } })
+    const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false } })
     setBusy(false)
     if (error) { setError(error.message); return }
     setCode(''); setState(STATES.code)

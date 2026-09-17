@@ -6,15 +6,17 @@ export function miles(aLat, aLng, bLat, bLng) {
   return Math.sqrt(dLat * dLat + dLng * dLng)
 }
 
-/* Home is Greenpoint. Exact address is a setting for later; Valhalla minutes
- * are computed on the Beelink from the same point. */
-export const HOME = { lat: 40.729, lng: -73.954, label: 'Home, Greenpoint' }
+/* Home is 200 Moffat St, Bushwick (Nate, 2026-09-17). The Beelink poller
+ * routes moped minutes from the same point (HOME_LAT/HOME_LNG in rounds.env);
+ * change both together. */
+export const HOME = { lat: 40.68805, lng: -73.90564, label: 'Home, Bushwick' }
 
 export const ORIGINS = [
-  { id: 'home', label: 'Home, Greenpoint', lat: HOME.lat, lng: HOME.lng },
+  { id: 'home', label: 'Home, Bushwick', lat: HOME.lat, lng: HOME.lng },
   { id: 'here', label: 'Where I am now', lat: null, lng: null },
+  { id: 'greenpoint', label: 'Greenpoint', lat: 40.729, lng: -73.954 },
+  { id: 'williamsburg', label: 'Williamsburg', lat: 40.714, lng: -73.958 },
   { id: 'union', label: 'Union Sq', lat: 40.735, lng: -73.99 },
-  { id: 'ridgewood', label: 'Ridgewood', lat: 40.703, lng: -73.905 },
   { id: 'fortgreene', label: 'Fort Greene', lat: 40.689, lng: -73.974 },
 ]
 
