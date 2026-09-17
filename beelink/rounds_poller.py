@@ -104,7 +104,18 @@ def refresh_pass():
         time.sleep(0.3)
 
 LISTS_EVERY = 7 * 24 * 3600
-_last_lists = 0
+
+def last_lists_run():
+    """Weekly work keys off the newest list fetch in the DB, so a container
+    restart does not re-scrape everything."""
+    try:
+        rows = sb("GET", "rounds_list_entries?select=fetched_at&order=fetched_at.desc&limit=1")
+        if rows: return datetime.fromisoformat(rows[0]["fetched_at"].replace("Z", "+00:00")).timestamp()
+    except Exception as e:
+        log("last_lists_run", e)
+    return 0
+
+_last_lists = last_lists_run()
 
 if __name__ == "__main__":
     once = "--once" in sys.argv
