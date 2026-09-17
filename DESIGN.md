@@ -44,6 +44,8 @@ and time-sensitive facts (NYT Best, Infatuation, happy hour), never on decoratio
 A BLACK badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the red list badges. A red badge means the place is on a curated list Nate trusts; the keys live in
 `src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
 
+Filter chips are one style in every row: ink outline, ink fill when active. No red chips; red is reserved for badges and time-sensitive facts (Nate, 2026-09-17, on seeing three chip styles stacked).
+
 ## Type
 
 - `--font-display`: **Archivo Narrow 700**, uppercase, for place names, the
