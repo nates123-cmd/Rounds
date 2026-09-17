@@ -13,6 +13,7 @@ export default function App() {
   const { who, places, loading, add, update, remove, went } = usePlaces()
   const [view, setView] = useState('want')
   const [occ, setOcc] = useState('all')
+  const [src, setSrc] = useState('all') // 'all' | 'rec' | a list key
   const [how, setHow] = useState(() => new Set())
   const [hood, setHood] = useState('all')
   const [openOnly, setOpenOnly] = useState(false)
@@ -47,6 +48,11 @@ export default function App() {
     return top
   }, [places, hood])
 
+  const srcs = useMemo(() => {
+    const present = new Set(places.flatMap((p) => listsOf(p)))
+    return Object.keys(LIST_SOURCES).filter((k) => present.has(k))
+  }, [places])
+
   const occs = useMemo(() => {
     const present = new Set(places.flatMap((p) => p.tags || []))
     return OCCASIONS.filter((t) => present.has(t))
@@ -62,7 +68,8 @@ export default function App() {
       const hay = [p.name, p.hood, p.kind, p.note, p.source, p.l_stop, p.happy_hour, (p.tags || []).join(' ')].join(' ').toLowerCase()
       if (!q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false
     }
-    if (occ === 'rec' ? !p.rec_by : LIST_SOURCES[occ] ? !listsOf(p).includes(occ) : occ !== 'all' && !(p.tags || []).includes(occ)) return false
+    if (occ !== 'all' && !(p.tags || []).includes(occ)) return false
+    if (src === 'rec' ? !p.rec_by : src !== 'all' && !listsOf(p).includes(src)) return false
     if (hood !== 'all' && p.hood !== hood) return false
     if (how.has('l') && !p.l_stop) return false
     if (how.has('moped') && !(p.moped_min != null && p.moped_min <= 20)) return false
@@ -84,12 +91,12 @@ export default function App() {
     if (how.size || originId !== 'home') { main.sort(byDist); tail.sort(byDist) }
     return { main, tail, counts }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [places, view, occ, hood, how, openOnly, q, origin, openState])
+  }, [places, view, occ, src, hood, how, openOnly, q, origin, openState])
 
   const total = main.length + tail.length
   const label = { want: 'to try', fav: 'favorites', tried: 'tried' }[view]
-  const filtered = occ !== 'all' || how.size > 0 || hood !== 'all' || openOnly || q.trim() !== '' || originId !== 'home'
-  const resetFilters = () => { setOcc('all'); setHow(new Set()); setHood('all'); setOpenOnly(false); setQ(''); setOriginId('home') }
+  const filtered = occ !== 'all' || src !== 'all' || how.size > 0 || hood !== 'all' || openOnly || q.trim() !== '' || originId !== 'home'
+  const resetFilters = () => { setOcc('all'); setSrc('all'); setHow(new Set()); setHood('all'); setOpenOnly(false); setQ(''); setOriginId('home') }
 
   return (
     <div className="app">
@@ -117,12 +124,15 @@ export default function App() {
         </div>
         <div className="chips" role="group" aria-label="Occasion">
           <button className="chip" aria-pressed={occ === 'all'} onClick={() => setOcc('all')}>All</button>
-          <button className="chip rec" aria-pressed={occ === 'rec'} onClick={() => setOcc('rec')}>Personal recs</button>
           {occs.map((t) => (
             <button key={t} className="chip" aria-pressed={occ === t} onClick={() => setOcc(t)}>{t}</button>
           ))}
-          {Object.entries(LIST_SOURCES).map(([k, v]) => (
-            <button key={k} className="chip" aria-pressed={occ === k} onClick={() => setOcc(k)}>{v}</button>
+        </div>
+        <div className="chips" role="group" aria-label="Source">
+          <button className="chip src-chip" aria-pressed={src === 'all'} onClick={() => setSrc('all')}>Any source</button>
+          <button className="chip src-chip rec" aria-pressed={src === 'rec'} onClick={() => setSrc('rec')}>Personal recs</button>
+          {srcs.map((k) => (
+            <button key={k} className="chip src-chip list" aria-pressed={src === k} onClick={() => setSrc(k)}>{LIST_SOURCES[k]}</button>
           ))}
         </div>
         <div className="chips" role="group" aria-label="Getting there">
