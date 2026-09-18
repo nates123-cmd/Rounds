@@ -3,8 +3,9 @@
  * the Pages origin and localhost. Field masks decide the SKU, and the SKU
  * decides the free tier, so every call names exactly the fields it needs.
  *
- *   Text Search, Pro fields    5,000 free / month   used by Add
- *   Place Details, Enterprise  1,000 free / month   hours + price, cached 7 days per place
+ *   Text Search, Pro fields         5,000 free / month   used by Add
+ *   Place Details, Enterprise       1,000 free / month   hours + price, cached 7 days per place
+ *   Place Details, Ent.+Atmosphere  1,000 free / month   placeAtmosphere, once per place, tag suggestions
  *
  * Terms: place IDs may be stored forever, coordinates 30 days, everything else
  * is meant to be fetched live. We cache hours and price briefly in the row so
@@ -37,7 +38,7 @@ export async function searchPlaces(text) {
   const data = await call('/places:searchText', {
     method: 'POST',
     body: { textQuery: text, locationBias: NYC, pageSize: 6, languageCode: 'en' },
-    mask: 'places.id,places.displayName,places.formattedAddress,places.shortFormattedAddress,places.location,places.primaryTypeDisplayName,places.addressComponents',
+    mask: 'places.id,places.displayName,places.formattedAddress,places.shortFormattedAddress,places.location,places.primaryTypeDisplayName,places.types,places.addressComponents',
   })
   return (data.places || []).map(normalize)
 }
@@ -48,6 +49,31 @@ export async function placeDetails(id) {
     mask: 'id,displayName,businessStatus,googleMapsUri,priceLevel,regularOpeningHours,location,addressComponents,primaryTypeDisplayName,websiteUri',
   })
   return normalize(p)
+}
+
+/**
+ * Enterprise + Atmosphere SKU, its own 1,000 free a month. Fetched ONCE per
+ * place (never on the weekly refresh) and kept under google.atmo. These are
+ * the raw signals src/lib/enrich.js turns into suggested tags: Google's types,
+ * the serves* / outdoorSeating / liveMusic booleans, the editorial line, and
+ * the secondary hours of type HAPPY_HOUR, which Google does carry for some bars.
+ */
+export async function placeAtmosphere(id) {
+  const p = await call(`/places/${id}`, {
+    mask: 'id,types,primaryTypeDisplayName,editorialSummary,generativeSummary,regularSecondaryOpeningHours,outdoorSeating,liveMusic,servesCocktails,servesWine,servesBeer,servesBrunch,servesLunch,servesDinner,servesDessert,servesCoffee,goodForGroups,goodForWatchingSports,reservable',
+  })
+  const hh = (p.regularSecondaryOpeningHours || []).find((h) => h.secondaryHoursType === 'HAPPY_HOUR')
+  const atmo = {
+    at: new Date().toISOString(),
+    types: p.types || [],
+    primary: p.primaryTypeDisplayName?.text || null,
+    summary: p.editorialSummary?.text || p.generativeSummary?.overview?.text || null,
+    hh_week: hh?.weekdayDescriptions || null,
+  }
+  for (const k of ['outdoorSeating', 'liveMusic', 'servesCocktails', 'servesWine', 'servesBeer', 'servesBrunch', 'servesLunch', 'servesDinner', 'servesDessert', 'servesCoffee', 'goodForGroups', 'goodForWatchingSports', 'reservable']) {
+    if (typeof p[k] === 'boolean') atmo[k] = p[k]
+  }
+  return atmo
 }
 
 export function hoodFrom(components = []) {

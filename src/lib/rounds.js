@@ -9,7 +9,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from './supabase'
-import { placeDetails, isStale } from './google'
+import { placeDetails, placeAtmosphere, isStale } from './google'
 
 export async function effectiveOwner() {
   const { data: { user } } = await supabase.auth.getUser()
@@ -23,7 +23,9 @@ export function usePlaces() {
   const [who, setWho] = useState(null)
   const [places, setPlaces] = useState([])
   const [loading, setLoading] = useState(true)
+  const [listEntries, setListEntries] = useState([])
   const refreshing = useRef(new Set())
+  const enriching = useRef(new Set())
 
   const load = useCallback(async (w) => {
     const { data, error } = await supabase
@@ -60,7 +62,7 @@ export function usePlaces() {
         try {
           const d = await placeDetails(p.google_place_id)
           await supabase.from('rounds_places').update({
-            google: d.google, business_status: d.business_status, lat: d.lat, lng: d.lng,
+            google: { ...d.google, atmo: p.google?.atmo }, business_status: d.business_status, lat: d.lat, lng: d.lng,
             hood: p.hood || d.hood, kind: p.kind || d.kind,
           }).eq('id', p.id)
         } catch (e) { console.warn('details', p.name, e.message) }
@@ -69,6 +71,36 @@ export function usePlaces() {
     })()
     return () => { cancelled = true }
   }, [places])
+
+  /* Backfill google.atmo (types, serves*, editorial line, Google happy hour)
+   * for rows that never had it: the seed and anything added before the
+   * suggestions shipped. One Enterprise+Atmosphere call per place, ever. */
+  useEffect(() => {
+    if (!places.length) return
+    const todo = places.filter((p) => p.google_place_id && !p.google?.atmo && !isStale(p.google) && !enriching.current.has(p.id)).slice(0, 12)
+    if (!todo.length) return
+    let cancelled = false
+    ;(async () => {
+      for (const p of todo) {
+        if (cancelled) return
+        enriching.current.add(p.id)
+        try {
+          const atmo = await placeAtmosphere(p.google_place_id)
+          await supabase.from('rounds_places').update({ google: { ...p.google, atmo } }).eq('id', p.id)
+        } catch (e) { console.warn('atmo', p.name, e.message) }
+        await new Promise((r) => setTimeout(r, 250))
+      }
+    })()
+    return () => { cancelled = true }
+  }, [places])
+
+  /* Curated lists are global and small (a few hundred rows). Loaded once so
+   * the sheet can say "this is on NYT Best" the moment a place resolves. */
+  useEffect(() => {
+    if (!who) return
+    supabase.from('rounds_list_entries').select('list_key,name_norm,lat,lng,active').eq('active', true)
+      .then(({ data }) => setListEntries(data || []))
+  }, [who])
 
   const add = async (row) => {
     const { error } = await supabase.from('rounds_places').insert({ ...row, owner_id: who.ownerId, added_by: who.userId })
@@ -99,5 +131,5 @@ export function usePlaces() {
     if (error) console.warn('ink visit', error.message)
   }
 
-  return { who, places, loading, add, update, remove, went, reload: () => who && load(who) }
+  return { who, places, listEntries, loading, add, update, remove, went, reload: () => who && load(who) }
 }

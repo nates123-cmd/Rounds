@@ -10,7 +10,7 @@ import { signOut } from './auth/AuthGate'
 const hasWhy = (p) => (p.note && p.note.trim()) || (p.tags && p.tags.length) || p.source === 'nyt'
 
 export default function App() {
-  const { who, places, loading, add, update, remove, went } = usePlaces()
+  const { who, places, listEntries, loading, add, update, remove, went } = usePlaces()
   const [view, setView] = useState('want')
   const [occ, setOcc] = useState('all')
   const [src, setSrc] = useState('all') // 'all' | 'rec' | a list key
@@ -202,7 +202,7 @@ export default function App() {
       </div>
 
       {sheet && (
-        <PlaceSheet mode={sheet.mode} place={sheet.place} existing={places}
+        <PlaceSheet mode={sheet.mode} place={sheet.place} existing={places} listEntries={listEntries}
           onClose={() => setSheet(null)}
           who={who}
           onSave={async (row) => { sheet.mode === 'add' ? await add(row) : await update(sheet.place.id, row); setSheet(null) }}

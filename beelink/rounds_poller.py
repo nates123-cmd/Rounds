@@ -90,10 +90,12 @@ def refresh_pass():
     for r in rows or []:
         try:
             d = google_details(r["google_place_id"])
-            g = {"fetched_at": datetime.now(timezone.utc).isoformat(),
+            # Keep google.atmo: the browser fetched it once (Enterprise+Atmosphere) for tag suggestions.
+            g = {k: v for k, v in (r.get("google") or {}).items() if k == "atmo"}
+            g.update({"fetched_at": datetime.now(timezone.utc).isoformat(),
                  "periods": (d.get("regularOpeningHours") or {}).get("periods"),
                  "weekday": (d.get("regularOpeningHours") or {}).get("weekdayDescriptions"),
-                 "price": d.get("priceLevel"), "maps_uri": d.get("googleMapsUri"), "website": d.get("websiteUri")}
+                 "price": d.get("priceLevel"), "maps_uri": d.get("googleMapsUri"), "website": d.get("websiteUri")})
             patch = {"google": g, "business_status": d.get("businessStatus")}
             if d.get("location"): patch.update(lat=d["location"]["latitude"], lng=d["location"]["longitude"])
             sb("PATCH", f"rounds_places?id=eq.{r['id']}", patch, prefer="return=minimal")
@@ -124,6 +126,12 @@ if __name__ == "__main__":
             route_pass(); refresh_pass()
             if once or time.time() - _last_lists > LISTS_EVERY:
                 lists_pass(sb, log); hh_pass(sb, log); _last_lists = time.time()
+            else:
+                # A place added since the weekly pass gets its happy hour and
+                # list badges on the next cycle, not next week.
+                hh_pass(sb, log, only_new=True)
+                try: sb("POST", "rpc/rounds_match_lists", {})
+                except Exception as e: log("match_lists", e)
         except Exception as e:
             log("pass failed", e)
         if once: break

@@ -19,6 +19,21 @@ Live: https://nates123-cmd.github.io/Rounds/
   routing in the US.
 - "Went" writes a row to Ink's `restaurant_visits` and sets the place status.
 
+## Auto-enrichment (suggested, never applied by itself)
+
+When a place resolves through Google, the browser makes one more call
+(`placeAtmosphere`, Enterprise + Atmosphere SKU, its own 1,000 free a month)
+and keeps the result under `google.atmo`: Google's types, the serves* /
+outdoorSeating / liveMusic / reservable booleans, the editorial line, and the
+secondary hours of type `HAPPY_HOUR`. `src/lib/enrich.js` turns that plus the
+coordinates into a delta: tags the place does not have, the nearest L stop
+within 0.6 mi, curated lists it matches (name or 130 m), a happy hour if it has
+none. The sheet shows these as a SUGGESTED block: tags are dashed chips you tap
+to accept, facts have a `use` link. In Add mode the facts are prefilled into
+the form (still visible before saving); tags are never pre-selected. Saving
+stamps `reviewed_at`; until then the entry shows "N suggested tags" in its
+meta line. Existing rows get `atmo` backfilled a dozen per open.
+
 ## Run
 
 ```
@@ -43,4 +58,9 @@ cd ../today-app && supabase db query --linked -f ../rounds-app/tools/seed.sql
 
 `beelink/rounds_poller.py`, runs under `~/apps/rounds-poller`. Fills
 `moped_min`, `bike_min`, `drive_min` from Valhalla for new rows, refreshes the
-Google hours cache weekly, and flags `CLOSED_PERMANENTLY`.
+Google hours cache weekly (keeping `google.atmo`), and flags
+`CLOSED_PERMANENTLY`. Every cycle it also runs the happy-hour scraper for rows
+never checked and re-stamps list badges, so a new place is reconciled within
+ten minutes rather than at the weekly pass. A happy hour lifted from Google
+(`happy_hour_source = 'google'`) is replaced by a verified aggregator entry
+but never by an `estimated` guess.
