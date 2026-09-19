@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { openNow, PRICE } from '../lib/hours'
 import { fmtMiles } from '../lib/geo'
 import { LIST_SOURCES, listsOf } from '../lib/tags'
+import { suggest } from '../lib/enrich'
 
 export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   const [verdict, setVerdict] = useState(null) // null | { pick, line }
@@ -22,6 +23,9 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   if (p.moped_min != null) meta.push(<span key="m">{p.moped_min} min moped</span>)
   else if (dist != null) meta.push(<span key="d">{fmtMiles(dist)}</span>)
   if (p.l_stop) meta.push(<span key="l" className="l">{p.l_stop}</span>)
+  /* Unreviewed suggestions from Google: a quiet count that opens the sheet. Gone once the sheet is saved. */
+  const pending = !p.reviewed_at && p.google?.atmo ? suggest(p).tags.length : 0
+  if (pending) meta.push(<button key="s" type="button" className="link soft" onClick={onEdit}>{pending} suggested {pending === 1 ? 'tag' : 'tags'}</button>)
 
   const why = p.status === 'fav'
     ? (p.note ? <p className="why back">{p.note}</p> : <p className="why none">what do you go back for?</p>)

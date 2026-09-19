@@ -136,6 +136,15 @@ input[type="search"] { -webkit-appearance: none; }
 .auth-label { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3); display: block; margin-top: 4px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .tagpick { display: flex; flex-wrap: wrap; gap: 6px; }
+/* Suggested from Google: same chip, dashed until tapped, then it moves into Tags as a solid one. */
+.sug { display: flex; flex-direction: column; gap: 6px; padding: 8px 0 10px; border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule); }
+.sug-head { display: flex; align-items: baseline; gap: 10px; }
+.sug-head .link { margin-left: auto; font-size: 12px; }
+.chip.sug-chip { border-style: dashed; color: var(--color-ink-2); }
+.sug-line { font-size: 13px; line-height: 1.4; color: var(--color-ink-2); }
+.sug-line .link { font-size: 12px; margin-left: 4px; }
+.sug-k { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin-right: 4px; }
+.meta .link.soft { color: var(--color-ink-3); font-size: 12px; }
 .hits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .hit { all: unset; cursor: pointer; display: flex; flex-direction: column; gap: 1px; padding: 9px 4px; border-bottom: 1px solid var(--color-rule); width: 100%; }
 .hit b { font-family: var(--font-display); font-weight: 700; font-size: 16px; text-transform: uppercase; }

@@ -168,12 +168,19 @@ def resolve(places, log=print):
         out.append((p, found))
     return out
 
-def hh_pass(sb, log):
-    places = sb("GET", "rounds_places?select=id,name,hood,google_place_id,lat,lng,happy_hour,happy_hour_source&google_place_id=not.is.null")
+def hh_pass(sb, log, only_new=False):
+    """only_new: just the rows never checked (added since the weekly pass).
+    A happy hour the app lifted from Google (source 'google') is kept unless an
+    aggregator has a real entry; an 'estimated' guess never replaces it."""
+    q = "rounds_places?select=id,name,hood,google_place_id,lat,lng,happy_hour,happy_hour_source&google_place_id=not.is.null"
+    if only_new: q += "&happy_hour_checked_at=is.null"
+    places = sb("GET", q)
+    if only_new and not places: return
     now = datetime.now(timezone.utc).isoformat()
     n = 0
     for p, found in resolve(places or [], log):
         patch = {"happy_hour_checked_at": now}
+        if found and (p.get("happy_hour_source") or "") == "google" and "estimated" in found[1]: found = None
         if found:
             patch.update(happy_hour=found[0][:140], happy_hour_source=found[1]); n += 1
         try: sb("PATCH", f"rounds_places?id=eq.{p['id']}", patch, prefer="return=minimal")
