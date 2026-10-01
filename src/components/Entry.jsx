@@ -3,6 +3,7 @@ import { openNow, PRICE } from '../lib/hours'
 import { fmtMiles } from '../lib/geo'
 import { LIST_SOURCES, listsOf } from '../lib/tags'
 import { suggest } from '../lib/enrich'
+import { vibeOf } from '../lib/vibe'
 
 export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   const [verdict, setVerdict] = useState(null) // null | { pick, line }
@@ -29,6 +30,8 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   const mi = p.moped_min == null ? fmtMiles(dist) : null
   const far = p.moped_min != null ? <>{p.moped_min}<small>MIN</small></>
     : mi?.endsWith(' mi') ? <>{mi.slice(0, -3)}<small>MI</small></> : mi
+
+  const vibe = vibeOf(p.google?.atmo)
 
   const why = p.status === 'fav'
     ? (p.note ? <p className="why back">{p.note}</p> : <p className="why none">what do you go back for?</p>)
@@ -63,6 +66,7 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
         <div className="tags">{tags.map((t, i) => <span key={t}>{i ? <span className="sep">&middot;</span> : null}{t}</span>)}</div>
       )}
       {why}
+      {vibe && <p className="vibe">{vibe.text} <span className="vibe-by">{vibe.by}</span></p>}
       <div className="meta">{meta.map((m, i) => <span key={i}>{i ? <span className="sep">&middot;</span> : null}{m}</span>)}</div>
       <div className="acts">
         {(p.links?.maps || p.google?.maps_uri) && <a className="went" href={p.links?.maps || p.google.maps_uri} target="_blank" rel="noreferrer">Go</a>}

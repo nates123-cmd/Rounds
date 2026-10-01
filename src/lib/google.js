@@ -5,7 +5,9 @@
  *
  *   Text Search, Pro fields         5,000 free / month   used by Add
  *   Place Details, Enterprise       1,000 free / month   hours + price, cached 7 days per place
- *   Place Details, Ent.+Atmosphere  1,000 free / month   placeAtmosphere, once per place, tag suggestions
+ *   Place Details, Ent.+Atmosphere  1,000 free / month   placeAtmosphere, once per place, tags + vibe line
+ *   Place Details, IDs only         unlimited free        placePhotos, the photo list, on each sheet open
+ *   Place Photos                    1,000 free / month   one image per sheet open, never stored
  *
  * Terms: place IDs may be stored forever, coordinates 30 days, everything else
  * is meant to be fetched live. We cache hours and price briefly in the row so
@@ -60,20 +62,55 @@ export async function placeDetails(id) {
  */
 export async function placeAtmosphere(id) {
   const p = await call(`/places/${id}`, {
-    mask: 'id,types,primaryTypeDisplayName,editorialSummary,generativeSummary,regularSecondaryOpeningHours,outdoorSeating,liveMusic,servesCocktails,servesWine,servesBeer,servesBrunch,servesLunch,servesDinner,servesDessert,servesCoffee,goodForGroups,goodForWatchingSports,reservable',
+    mask: 'id,types,primaryTypeDisplayName,editorialSummary,generativeSummary,reviewSummary,regularSecondaryOpeningHours,outdoorSeating,liveMusic,servesCocktails,servesWine,servesBeer,servesBrunch,servesLunch,servesDinner,servesDessert,servesCoffee,goodForGroups,goodForWatchingSports,reservable',
   })
   const hh = (p.regularSecondaryOpeningHours || []).find((h) => h.secondaryHoursType === 'HAPPY_HOUR')
+  const rs = p.reviewSummary
   const atmo = {
+    v: ATMO_V,
     at: new Date().toISOString(),
     types: p.types || [],
     primary: p.primaryTypeDisplayName?.text || null,
     summary: p.editorialSummary?.text || p.generativeSummary?.overview?.text || null,
+    summary_by: p.editorialSummary?.text ? 'google' : p.generativeSummary?.overview?.text ? 'gemini' : null,
     hh_week: hh?.weekdayDescriptions || null,
+    /* Gemini's summary of the reviews. Google requires its disclosure text
+     * shown with it, and the report link offered, wherever it is displayed. */
+    review: rs?.text?.text ? {
+      text: rs.text.text,
+      disclosure: rs.disclosureText?.text || 'Summarized with Gemini',
+      flag: rs.flagContentUri || null,
+      reviews: rs.reviewsUri || null,
+    } : null,
+    /* Same rule for the generative overview, when that is what the vibe line falls back to. */
+    gen_disclosure: p.generativeSummary?.disclosureText?.text || null,
+    gen_flag: p.generativeSummary?.overviewFlagContentUri || null,
   }
   for (const k of ['outdoorSeating', 'liveMusic', 'servesCocktails', 'servesWine', 'servesBeer', 'servesBrunch', 'servesLunch', 'servesDinner', 'servesDessert', 'servesCoffee', 'goodForGroups', 'goodForWatchingSports', 'reservable']) {
     if (typeof p[k] === 'boolean') atmo[k] = p[k]
   }
   return atmo
+}
+
+/* Bump when placeAtmosphere asks for new fields; rows below it are re-fetched once. 2 = reviewSummary. */
+export const ATMO_V = 2
+
+/**
+ * IDs-only Place Details (free) for the photo list. Photo names expire, so
+ * they are fetched on each sheet open and never written to the row. Picks the
+ * first big landscape shot: the first photo is often the owner's logo.
+ */
+export async function placePhotos(id) {
+  const p = await call(`/places/${id}`, { mask: 'photos' })
+  const all = p.photos || []
+  const best = all.find((f) => f.widthPx >= 800 && f.widthPx > f.heightPx) || all[0]
+  if (!best) return null
+  return {
+    url: `${BASE}/${best.name}/media?maxWidthPx=1000&key=${KEY}`,
+    w: best.widthPx, h: best.heightPx,
+    by: (best.authorAttributions || []).map((a) => ({ name: a.displayName, uri: a.uri })),
+    maps: best.googleMapsUri || null,
+  }
 }
 
 export function hoodFrom(components = []) {

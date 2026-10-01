@@ -16,7 +16,9 @@ discovery app (photos, cards, ratings, a map hero) it is wrong.
 
 ## Banned
 
-- Photos or photo tiles. The list is words.
+- Photos or photo tiles in the list. The list is words. One photo is allowed in
+  the place sheet only (2026-09-30), full sheet width, square corners, with
+  its credit line under it.
 - Star characters or numeric ratings of any kind. Google's rating is noise and
   is never shown. Status is a word: to try, favorite, tried, pass.
 - Bordered rounded cards. Entries are separated by hairline rules only.
@@ -58,6 +60,20 @@ A CREAM (ink-filled) badge ("Rec · Nate") means a person vouched for it; that i
 `src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
 
 Filter chips are one style in every row: ink outline, ink fill when active. No red chips; red is reserved for badges and time-sensitive facts (Nate, 2026-09-17, on seeing three chip styles stacked).
+
+## Photo and vibe line (2026-09-30, from the deck: "picture API? Vibe of place?")
+
+- **Vibe line**: one italic line under the note, ink-2, smaller than the note.
+  It is the room sentence from Google's Gemini review summary
+  (`src/lib/vibe.js`), else Google's editorial line. The note is always the
+  headline; the vibe line never replaces or outranks it, and is never quoted.
+- **Photo**: one, in the place sheet, fetched live on open (`placePhotos`).
+  Photo names expire, so nothing photo-related is stored on the row.
+- **Honesty rules that outrank the design**: Google requires its disclosure
+  shown wherever a generated summary appears ("Summarized with Gemini" as a
+  tiny caps label after the vibe line), the photographer credited under the
+  photo, and the report link offered beside the full summary in the sheet.
+  Never trim these to tidy the layout.
 
 ## The motif: the menu price column
 
