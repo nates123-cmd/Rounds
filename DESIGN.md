@@ -7,7 +7,7 @@ Read this before changing anything visual.
 **The Zagat pocket guide, 1990s to 2000s.** A dense, typographic catalogue of
 places: condensed bold names in caps, a neighborhood line in small caps, a
 quoted line stitched from what people actually said, a small red mark for the
-ones that made a list. Cream paper, black ink, one red. No pictures.
+ones that made a list (Rounds spends that one accent in indigo). Cream paper, black ink, one accent. No pictures.
 
 The thing to keep hold of: it is a *reference book you carry*, not a feed. Every
 entry is scannable in one second, and the personality is in the quotes, which
@@ -28,38 +28,43 @@ discovery app (photos, cards, ratings, a map hero) it is wrong.
 - Emoji. Icons beside labels. A glyph appears only when it carries meaning alone.
 - A map as the primary surface. "Go" hands off to Google Maps.
 
-## Colour: menu after dark (2026-09-30)
+## Colour: cream paper, indigo accent (2026-10-01)
 
-The moodboard deck (App-moodboard-v2, Rounds slide) notes from Nate and Amanda:
-"Dark mode; try a blue or indigo." Nate picked the "menu after dark" direction.
-Indigo night is the **only** theme; it does not follow the phone's system
-setting. Who owns what:
+History: the moodboard deck notes ("Dark mode; try a blue or indigo") led to
+an indigo-night ground on 2026-09-30. Nate, a day later: "I don't like the
+colors as much. Can we make the indigo the accent rather than the
+background?" So the ground went back to Zagat cream and indigo replaced red
+as the one accent. The theme follows the phone: light is cream, dark is warm
+near-black, never indigo. Who owns what:
 
-- **Zagat pocket guide** still owns type, density, the quoted notes and the
-  one-red rule. Unchanged.
-- **The Infatuation + NYT 100 Best** (both blue grounds, sampled `#3C63EF` and
-  `#599EE3`) own the ground. Taken darker to indigo so the cream reads at night.
+- **Zagat pocket guide** owns the ground (cream paper, black ink), type,
+  density and the quoted notes.
+- **The Infatuation + NYT 100 Best** (both blue, sampled `#3C63EF` and
+  `#599EE3`) own the accent, taken darker to indigo so it holds on cream.
 - **Old NYC menus** own the devices: the dot leader and the double rule.
 
-| Token | Value | Role |
-| --- | --- | --- |
-| `--color-bg` | `#121933` | Page ground, indigo night. |
-| `--color-bg-raised` | `#1A2346` | Inputs, the capture bar. |
-| `--color-ink` | `#F1E8D4` | Names, notes, rules, cream like menu stock. |
-| `--color-ink-2` | `#C7BFAC` | Neighborhood line, meta. |
-| `--color-ink-3` | `#8C90AC` | Tags, counts, placeholders, the leader dots. |
-| `--color-rule` | `#2C3765` | Hairlines between entries. |
-| `--color-accent` | `#E04A37` | Red as text or a line: HH, closed, active tab, half the wordmark. |
-| `--color-badge` | `#C23A2B` | Red as a fill: list badges, Add a place. Darker so cream text holds. |
-| `--color-accent-ink` | `#F8F1E1` | Text on a red fill. |
-| `--color-warn-bg` | `#222C55` | The "no why yet" flag. |
+| Token | Light | Dark | Role |
+| --- | --- | --- | --- |
+| `--color-bg` | `#F1EADB` | `#191511` | Page ground, cream paper. |
+| `--color-bg-raised` | `#F8F3E7` | `#221D17` | Inputs, the capture bar. |
+| `--color-ink` | `#1C1712` | `#EFE6D3` | Names, notes, rules. |
+| `--color-ink-2` | `#55493B` | `#C2B49C` | Neighborhood line, meta. |
+| `--color-ink-3` | `#8A7D6A` | `#8C7F6B` | Tags, counts, placeholders, leader dots, "closed". |
+| `--color-rule` | `#CFC3AA` | `#3C332A` | Hairlines between entries. |
+| `--color-accent` | `#2F3B96` | `#9AA5FF` | Indigo as text or a line: HH, active tab, half the wordmark, focus. |
+| `--color-badge` | `#2F3B96` | `#3E4BB0` | Indigo as a fill: list badges, Add a place. |
+| `--color-accent-ink` | `#F8F3E7` | `#F4EEE0` | Text on an indigo fill. |
+| `--color-danger` | `#A8321F` | `#E2674F` | Errors and Remove only. Never decoration. |
+| `--color-warn-bg` | `#E9DDBE` | `#2E271C` | The "no why yet" flag. |
 
-No colour outside this table enters the app. The red is spent on provenance
-and time-sensitive facts (NYT Best, Infatuation, happy hour), never on decoration.
-A CREAM (ink-filled) badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the red list badges. A red badge means the place is on a curated list Nate trusts; the keys live in
-`src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
+No colour outside this table enters the app. The indigo is spent on
+provenance and time-sensitive facts (NYT Best, Infatuation, happy hour) and
+the few controls that need to be found (active tab, Add a place), never on
+decoration. "Closed" is quiet ink-3, not a colour: it is a state, not an alarm.
+An INK-filled badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the indigo list badges. An indigo badge means the place is on a curated list Nate trusts; the keys live in
+`src/lib/tags.js` `LIST_SOURCES`.
 
-Filter chips are one style in every row: ink outline, ink fill when active. No red chips; red is reserved for badges and time-sensitive facts (Nate, 2026-09-17, on seeing three chip styles stacked).
+Filter chips are one style in every row: ink outline, ink fill when active. No indigo chips; indigo is reserved for badges, time-sensitive facts and the two controls above (Nate, 2026-09-17, on seeing three chip styles stacked).
 
 ## Photo and vibe line (2026-09-30, from the deck: "picture API? Vibe of place?")
 
@@ -84,8 +89,9 @@ It answers "how far" at a glance, which is the question the list exists for.
 Distance never appears in the meta line too. Section breaks (masthead, tail
 heads) are a 4px double rule, the menu's frame line.
 
-If a change makes it look like a dark-mode dashboard (glows, gradients, blue
-accents on everything), it is wrong: indigo is the ground, not a highlight.
+If a change makes it look like a tech product (indigo grounds, glows,
+gradients, blue on everything), it is wrong: indigo is a pen mark on paper,
+not the paper.
 
 ## Type
 
