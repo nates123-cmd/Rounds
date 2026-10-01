@@ -195,7 +195,7 @@ export function PlaceSheet({ mode, place, existing, listEntries = [], who, onClo
           <>
             {photo && (
               <figure className="photo">
-                <img src={photo.url} alt="" loading="lazy" style={{ aspectRatio: photo.w && photo.h ? `${photo.w} / ${photo.h}` : undefined }} />
+                <img src={photo.url} alt="" fetchPriority="high" decoding="async" onLoad={(e) => e.currentTarget.classList.add('in')} style={{ aspectRatio: photo.w && photo.h ? `${photo.w} / ${photo.h}` : undefined }} />
                 <figcaption>
                   {photo.by.length > 0 && <>Photo {photo.by.map((a, i) => <span key={i}>{i ? ', ' : ''}{a.uri ? <a href={a.uri} target="_blank" rel="noreferrer">{a.name}</a> : a.name}</span>)} </>}
                   <span className="vibe-by">Google Maps</span>

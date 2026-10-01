@@ -97,20 +97,33 @@ export const ATMO_V = 2
 
 /**
  * IDs-only Place Details (free) for the photo list. Photo names expire, so
- * they are fetched on each sheet open and never written to the row. Picks the
+ * they are never written to the row, only remembered for this session, which
+ * also means reopening a place costs no second Place Photos call. Picks the
  * first big landscape shot: the first photo is often the owner's logo.
+ *
+ * As soon as the URL is known the image itself starts downloading (new Image),
+ * so by the time the sheet's <img> asks, the browser cache has it.
  */
-export async function placePhotos(id) {
-  const p = await call(`/places/${id}`, { mask: 'photos' })
-  const all = p.photos || []
-  const best = all.find((f) => f.widthPx >= 800 && f.widthPx > f.heightPx) || all[0]
-  if (!best) return null
-  return {
-    url: `${BASE}/${best.name}/media?maxWidthPx=1000&key=${KEY}`,
-    w: best.widthPx, h: best.heightPx,
-    by: (best.authorAttributions || []).map((a) => ({ name: a.displayName, uri: a.uri })),
-    maps: best.googleMapsUri || null,
-  }
+const photoCache = new Map()
+
+export function placePhotos(id) {
+  if (photoCache.has(id)) return photoCache.get(id)
+  const job = call(`/places/${id}`, { mask: 'photos' }).then((p) => {
+    const all = p.photos || []
+    const best = all.find((f) => f.widthPx >= 800 && f.widthPx > f.heightPx) || all[0]
+    if (!best) return null
+    const url = `${BASE}/${best.name}/media?maxWidthPx=800&key=${KEY}`
+    const pre = new Image(); pre.decoding = 'async'; pre.src = url
+    return {
+      url,
+      w: best.widthPx, h: best.heightPx,
+      by: (best.authorAttributions || []).map((a) => ({ name: a.displayName, uri: a.uri })),
+      maps: best.googleMapsUri || null,
+    }
+  })
+  job.catch(() => photoCache.delete(id))
+  photoCache.set(id, job)
+  return job
 }
 
 export function hoodFrom(components = []) {
