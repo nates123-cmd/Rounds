@@ -1,23 +1,33 @@
 /* Rounds. Tokens per DESIGN.md; every rule below consumes them. */
-/* Menu after dark (2026-09-30): indigo night is the only theme, chosen from the moodboard deck. */
+/* Cream paper, indigo accent (2026-10-01): indigo moved from the ground to the
+ * one accent at Nate's ask. Follows the phone: dark mode is warm near-black. */
 :root {
   --font-display: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", Menlo, Consolas, monospace;
-  --color-bg: #121933;
-  --color-bg-raised: #1A2346;
-  --color-ink: #F1E8D4;
-  --color-ink-2: #C7BFAC;
-  --color-ink-3: #8C90AC;
-  --color-rule: #2C3765;
-  --color-rule-strong: #F1E8D4;
-  --color-accent: #E04A37;
-  --color-badge: #C23A2B;
-  --color-accent-ink: #F8F1E1;
-  --color-warn-bg: #222C55;
+  --color-bg: #F1EADB;
+  --color-bg-raised: #F8F3E7;
+  --color-ink: #1C1712;
+  --color-ink-2: #55493B;
+  --color-ink-3: #8A7D6A;
+  --color-rule: #CFC3AA;
+  --color-rule-strong: #1C1712;
+  --color-accent: #2F3B96;
+  --color-badge: #2F3B96;
+  --color-accent-ink: #F8F3E7;
+  --color-danger: #A8321F;
+  --color-warn-bg: #E9DDBE;
   --radius: 2px;
   --shadow: none;
-  color-scheme: dark;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #191511; --color-bg-raised: #221D17; --color-ink: #EFE6D3; --color-ink-2: #C2B49C;
+    --color-ink-3: #8C7F6B; --color-rule: #3C332A; --color-rule-strong: #EFE6D3;
+    --color-accent: #9AA5FF; --color-badge: #3E4BB0; --color-accent-ink: #F4EEE0;
+    --color-danger: #E2674F; --color-warn-bg: #2E271C;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -66,7 +76,7 @@ input[type="search"] { -webkit-appearance: none; }
 .count-acts { display: flex; gap: 14px; }
 .toggle.reset { color: var(--color-accent); font-weight: 600; }
 .toggle, .link { color: var(--color-ink-2); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; font-size: inherit; }
-.link.danger { color: var(--color-accent); }
+.link.danger { color: var(--color-danger); }
 
 /* entries */
 .list { list-style: none; margin: 0; padding: 0; }
@@ -100,7 +110,7 @@ input[type="search"] { -webkit-appearance: none; }
 .vibe-by { font-style: normal; font-family: var(--font-display); font-weight: 700; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3); white-space: nowrap; margin-left: 2px; }
 .meta { grid-area: meta; align-self: center; font-size: 12px; color: var(--color-ink-3); font-variant-numeric: tabular-nums; margin-top: 4px; }
 .meta .open { color: var(--color-ink-2); font-weight: 500; }
-.meta .closed { color: var(--color-accent); font-weight: 500; }
+.meta .closed { color: var(--color-ink-3); font-weight: 500; }
 .meta .hh { color: var(--color-accent); font-weight: 500; }
 .meta .l { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.04em; color: var(--color-ink-2); }
 .meta .l::before { content: "L "; color: var(--color-ink-3); font-weight: 500; }
@@ -138,7 +148,7 @@ input[type="search"] { -webkit-appearance: none; }
 .capture > * { max-width: 528px; margin: 0 auto; display: block; }
 
 /* sheet */
-.sheet-back { position: fixed; inset: 0; background: rgba(6, 9, 22, 0.6); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet-back { position: fixed; inset: 0; background: rgba(20, 16, 12, 0.45); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
 .sheet { width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; background: var(--color-bg); border-top: 2px solid var(--color-rule-strong); padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 8px; }
 .photo { margin: 0 -16px 4px; }
 .photo img { display: block; width: 100%; max-height: 260px; object-fit: cover; background: var(--color-bg-raised); }
@@ -169,7 +179,7 @@ input[type="search"] { -webkit-appearance: none; }
 .hit .muted, li.hit.muted { color: var(--color-ink-3); font-style: italic; cursor: default; }
 .sheet-acts { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
 .sheet-acts .btn-solid { margin-left: auto; }
-.err { color: var(--color-accent); font-size: 13px; }
+.err { color: var(--color-danger); font-size: 13px; }
 
 /* auth */
 .auth-shell { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px 16px; background: var(--color-bg); }
