@@ -22,6 +22,12 @@
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
+/* No sideways page movement on phones: clip anything wider than the screen
+ * (clip, not hidden, so the sticky masthead keeps working), stop the sideways
+ * rubber-band, and only let the page pan vertically. Chip rows and the sheet
+ * scroll on their own and opt back in below. */
+html, body { overflow-x: clip; overscroll-behavior-x: none; }
+body { touch-action: pan-y pinch-zoom; }
 body {
   margin: 0; background: var(--color-bg); color: var(--color-ink);
   font-family: var(--font-body); font-size: 14px; line-height: 1.4; -webkit-font-smoothing: antialiased;
@@ -43,10 +49,10 @@ button { cursor: pointer; }
 .view b { font-weight: 500; font-size: 12px; margin-left: 3px; font-variant-numeric: tabular-nums; }
 .view[aria-selected="true"] { color: var(--color-ink); border-bottom-color: var(--color-accent); }
 .search { padding-top: 12px; }
-.search input, .sheet input, .sheet select, .auth-form input { width: 100%; font-size: 15px; padding: 9px 12px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); color: var(--color-ink); }
+.search input, .sheet input, .sheet select, .auth-form input { width: 100%; font-size: 16px; padding: 9px 12px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); color: var(--color-ink); }
 input::placeholder { color: var(--color-ink-3); }
 input[type="search"] { -webkit-appearance: none; }
-.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-block: 10px 0; margin-inline: -16px; padding-inline: 16px; }
+.chips { display: flex; gap: 6px; overflow-x: auto; touch-action: pan-x pan-y; overscroll-behavior-x: contain; scrollbar-width: none; padding-block: 10px 0; margin-inline: -16px; padding-inline: 16px; }
 .chips::-webkit-scrollbar { display: none; }
 .chips + .chips { padding-top: 6px; }
 .chips.hoods { padding-bottom: 12px; }
@@ -105,7 +111,7 @@ input[type="search"] { -webkit-appearance: none; }
 .verdict .vopts { display: flex; gap: 6px; width: 100%; }
 .verdict .vopts button { flex: 1; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 0 6px; background: transparent; color: var(--color-ink); border: 1px solid var(--color-ink); border-radius: var(--radius); }
 .verdict .vopts button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-bg); }
-.verdict input { flex: 1; min-width: 0; font-size: 14px; padding: 8px 10px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); }
+.verdict input { flex: 1; min-width: 0; font-size: 16px; padding: 8px 10px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); }
 .btn-solid { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 14px; background: var(--color-ink); color: var(--color-bg); border: 0; border-radius: var(--radius); }
 .btn-solid:disabled { opacity: 0.5; cursor: default; }
 .btn-solid.wide { width: 100%; background: var(--color-badge); color: var(--color-accent-ink); padding-block: 12px; }
@@ -115,7 +121,7 @@ input[type="search"] { -webkit-appearance: none; }
 .foot { margin-top: 28px; font-size: 11.5px; color: var(--color-ink-3); line-height: 1.5; }
 
 /* paste + links */
-.sheet textarea { width: 100%; font: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); color: var(--color-ink); resize: vertical; }
+.sheet textarea { width: 100%; font: inherit; font-size: 16px; padding: 9px 12px; border: 1px solid var(--color-ink); border-radius: var(--radius); background: var(--color-bg-raised); color: var(--color-ink); resize: vertical; }
 .linkrow { display: flex; flex-wrap: wrap; gap: 6px; }
 .linkchip { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--color-ink); border-radius: var(--radius); padding: 4px 6px 3px; }
 .linkchip a { color: var(--color-ink); text-decoration: none; }
