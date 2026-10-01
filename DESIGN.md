@@ -26,25 +26,50 @@ discovery app (photos, cards, ratings, a map hero) it is wrong.
 - Emoji. Icons beside labels. A glyph appears only when it carries meaning alone.
 - A map as the primary surface. "Go" hands off to Google Maps.
 
-## Colour
+## Colour: menu after dark (2026-09-30)
 
-| Token | Light | Dark | Role |
-| --- | --- | --- | --- |
-| `--color-bg` | `#F1EADB` | `#191511` | Page ground, cream paper. |
-| `--color-bg-raised` | `#F8F3E7` | `#221D17` | Inputs, the capture bar. |
-| `--color-ink` | `#1C1712` | `#EFE6D3` | Names, notes, rules. |
-| `--color-ink-2` | `#55493B` | `#C2B49C` | Neighborhood line, meta. |
-| `--color-ink-3` | `#8A7D6A` | `#8C7F6B` | Tags, counts, placeholders. |
-| `--color-rule` | `#CFC3AA` | `#3C332A` | Hairlines between entries. |
-| `--color-accent` | `#B4261C` | `#E2503F` | The one red: list badge, happy hour, active travel chip, half the wordmark. |
-| `--color-warn-bg` | `#E9DDBE` | `#2E271C` | The "no why yet" flag. |
+The moodboard deck (App-moodboard-v2, Rounds slide) notes from Nate and Amanda:
+"Dark mode; try a blue or indigo." Nate picked the "menu after dark" direction.
+Indigo night is the **only** theme; it does not follow the phone's system
+setting. Who owns what:
+
+- **Zagat pocket guide** still owns type, density, the quoted notes and the
+  one-red rule. Unchanged.
+- **The Infatuation + NYT 100 Best** (both blue grounds, sampled `#3C63EF` and
+  `#599EE3`) own the ground. Taken darker to indigo so the cream reads at night.
+- **Old NYC menus** own the devices: the dot leader and the double rule.
+
+| Token | Value | Role |
+| --- | --- | --- |
+| `--color-bg` | `#121933` | Page ground, indigo night. |
+| `--color-bg-raised` | `#1A2346` | Inputs, the capture bar. |
+| `--color-ink` | `#F1E8D4` | Names, notes, rules, cream like menu stock. |
+| `--color-ink-2` | `#C7BFAC` | Neighborhood line, meta. |
+| `--color-ink-3` | `#8C90AC` | Tags, counts, placeholders, the leader dots. |
+| `--color-rule` | `#2C3765` | Hairlines between entries. |
+| `--color-accent` | `#E04A37` | Red as text or a line: HH, closed, active tab, half the wordmark. |
+| `--color-badge` | `#C23A2B` | Red as a fill: list badges, Add a place. Darker so cream text holds. |
+| `--color-accent-ink` | `#F8F1E1` | Text on a red fill. |
+| `--color-warn-bg` | `#222C55` | The "no why yet" flag. |
 
 No colour outside this table enters the app. The red is spent on provenance
 and time-sensitive facts (NYT Best, Infatuation, happy hour), never on decoration.
-A BLACK badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the red list badges. A red badge means the place is on a curated list Nate trusts; the keys live in
+A CREAM (ink-filled) badge ("Rec · Nate") means a person vouched for it; that is the personal-versus-list distinction Nate asked for on 2026-09-16 and it must stay visually distinct from the red list badges. A red badge means the place is on a curated list Nate trusts; the keys live in
 `src/lib/tags.js` `LIST_SOURCES`. Nate signed off on the Zagat look 2026-09-16.
 
 Filter chips are one style in every row: ink outline, ink fill when active. No red chips; red is reserved for badges and time-sensitive facts (Nate, 2026-09-17, on seeing three chip styles stacked).
+
+## The motif: the menu price column
+
+Every entry's name runs into a dotted leader that ends in moped minutes from
+home (or straight-line miles when there is no route yet), set like the price
+on an old NYC menu: display face, tabular digits, a small letterspaced unit.
+It answers "how far" at a glance, which is the question the list exists for.
+Distance never appears in the meta line too. Section breaks (masthead, tail
+heads) are a 4px double rule, the menu's frame line.
+
+If a change makes it look like a dark-mode dashboard (glows, gradients, blue
+accents on everything), it is wrong: indigo is the ground, not a highlight.
 
 ## Type
 
@@ -59,7 +84,7 @@ Filter chips are one style in every row: ink outline, ink fill when active. No r
 
 One column, max 560px, 16px gutters. Sticky masthead: wordmark and origin,
 three view tabs, search, three chip rows (occasion, getting there, hood), a
-2px black rule. Entries below as a grid: name and badge, hood line, tags, the
+4px double rule. Entries below as a grid: name and badge, hood line, tags, the
 note, meta and the action. A fixed capture bar at the bottom.
 
 ## Rules for changes
