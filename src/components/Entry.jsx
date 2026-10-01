@@ -4,6 +4,7 @@ import { fmtMiles } from '../lib/geo'
 import { LIST_SOURCES, listsOf } from '../lib/tags'
 import { suggest } from '../lib/enrich'
 import { vibeOf } from '../lib/vibe'
+import { placePhotos } from '../lib/google'
 
 export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   const [verdict, setVerdict] = useState(null) // null | { pick, line }
@@ -50,7 +51,9 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
   return (
     <li className={`entry${p.status === 'pass' ? ' is-pass' : ''}${closed ? ' is-closed' : ''}`}>
       <div className="head">
-        <h2 className="name"><button className="name-btn" onClick={onEdit}>{p.name}</button></h2>
+        <h2 className="name"><button className="name-btn" onClick={onEdit}
+          /* Touch-down starts the photo before the tap opens the sheet. */
+          onPointerDown={() => { if (p.google_place_id) placePhotos(p.google_place_id).catch(() => {}) }}>{p.name}</button></h2>
         {far != null && <><span className="lead" aria-hidden="true" /><span className="far" title={p.moped_min != null ? 'minutes by moped from home' : 'straight-line distance'}>{far}</span></>}
       </div>
       <div className="src-col">
