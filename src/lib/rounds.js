@@ -9,7 +9,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { supabase } from './supabase'
-import { placeDetails, placeAtmosphere, isStale } from './google'
+import { placeDetails, placeAtmosphere, isStale, ATMO_V } from './google'
 
 export async function effectiveOwner() {
   const { data: { user } } = await supabase.auth.getUser()
@@ -72,12 +72,13 @@ export function usePlaces() {
     return () => { cancelled = true }
   }, [places])
 
-  /* Backfill google.atmo (types, serves*, editorial line, Google happy hour)
-   * for rows that never had it: the seed and anything added before the
-   * suggestions shipped. One Enterprise+Atmosphere call per place, ever. */
+  /* Backfill google.atmo (types, serves*, editorial line, Google happy hour,
+   * review summary for the vibe line) for rows that never had it or have an
+   * older shape (atmo.v below ATMO_V). One Enterprise+Atmosphere call per
+   * place per version. reviewed_at is untouched, so no new suggestion nag. */
   useEffect(() => {
     if (!places.length) return
-    const todo = places.filter((p) => p.google_place_id && !p.google?.atmo && !isStale(p.google) && !enriching.current.has(p.id)).slice(0, 12)
+    const todo = places.filter((p) => p.google_place_id && (p.google?.atmo?.v || 1) < ATMO_V && !isStale(p.google) && !enriching.current.has(p.id)).slice(0, 12)
     if (!todo.length) return
     let cancelled = false
     ;(async () => {

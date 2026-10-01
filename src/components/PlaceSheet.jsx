@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { searchPlaces, placeAtmosphere } from '../lib/google'
+import { searchPlaces, placeAtmosphere, placePhotos } from '../lib/google'
 import { parsePaste, extractUrls, kindOf } from '../lib/paste'
 import { OCCASIONS, LIST_SOURCES } from '../lib/tags'
 import { suggest } from '../lib/enrich'
@@ -48,6 +48,16 @@ export function PlaceSheet({ mode, place, existing, listEntries = [], who, onClo
     }, 450)
     return () => clearTimeout(t)
   }, [q, mode, picked])
+
+  /* One photo per open. Photo names expire, so this is never saved to the row. */
+  const [photo, setPhoto] = useState(null)
+  const photoFor = picked?.google_place_id
+  useEffect(() => {
+    if (!photoFor) { setPhoto(null); return }
+    let gone = false
+    placePhotos(photoFor).then((ph) => { if (!gone) setPhoto(ph) }).catch((e) => console.warn('photo', e.message))
+    return () => { gone = true }
+  }, [photoFor])
 
   /* Enrich as soon as there is a Google place and no atmosphere on record. */
   const gpid = picked?.google_place_id
@@ -183,6 +193,15 @@ export function PlaceSheet({ mode, place, existing, listEntries = [], who, onClo
 
         {(picked || mode === 'edit') && (
           <>
+            {photo && (
+              <figure className="photo">
+                <img src={photo.url} alt="" loading="lazy" style={{ aspectRatio: photo.w && photo.h ? `${photo.w} / ${photo.h}` : undefined }} />
+                <figcaption>
+                  {photo.by.length > 0 && <>Photo {photo.by.map((a, i) => <span key={i}>{i ? ', ' : ''}{a.uri ? <a href={a.uri} target="_blank" rel="noreferrer">{a.name}</a> : a.name}</span>)} </>}
+                  <span className="vibe-by">Google Maps</span>
+                </figcaption>
+              </figure>
+            )}
             <label className="auth-label" htmlFor="f-name">Name</label>
             <input id="f-name" value={form.name} onChange={set('name')} required />
             <div className="two">
@@ -207,6 +226,18 @@ export function PlaceSheet({ mode, place, existing, listEntries = [], who, onClo
               setForm((f) => ({ ...f, links: { ...f.links, [kindOf(u)]: u } })); e.target.value = ''
             }} />
 
+            {atmo?.review?.text && (
+              <div className="said">
+                <span className="auth-label">What people say</span>
+                {atmo.review.text.split(/\n+/).map((t, i) => <p key={i}>{t}</p>)}
+                <div className="auth-note">
+                  <span className="vibe-by">{atmo.review.disclosure}</span>
+                  {atmo.review.reviews && <> <a className="link" href={atmo.review.reviews} target="_blank" rel="noreferrer">reviews</a></>}
+                  {atmo.review.flag && <> <a className="link" href={atmo.review.flag} target="_blank" rel="noreferrer">report</a></>}
+                </div>
+              </div>
+            )}
+
             {showSug && (
               <div className="sug" aria-label="Suggested from Google">
                 <div className="sug-head">
@@ -219,7 +250,7 @@ export function PlaceSheet({ mode, place, existing, listEntries = [], who, onClo
                     {sug.tags.map((t) => <button key={t} type="button" className="chip sug-chip" onClick={() => toggleTag(t)}>{t}</button>)}
                   </div>
                 )}
-                {sug?.summary && <div className="sug-line"><span className="sug-k">Google says</span> {sug.summary}</div>}
+                {sug?.summary && <div className="sug-line"><span className="sug-k">{atmo?.summary_by === 'gemini' ? (atmo.gen_disclosure || 'Summarized with Gemini') : 'Google says'}</span> {sug.summary}</div>}
                 {sug?.kind && <div className="sug-line"><span className="sug-k">Kind</span> {sug.kind} <button type="button" className="link" onClick={useKind}>use</button></div>}
                 {sug?.l_stop && <div className="sug-line"><span className="sug-k">L stop</span> {sug.l_stop.name}, {fmtMiles(sug.l_stop.mi)} <button type="button" className="link" onClick={useL}>use</button></div>}
                 {sug?.lists.length > 0 && <div className="sug-line"><span className="sug-k">On</span> {sug.lists.map((k) => LIST_SOURCES[k] || k).join(', ')} <button type="button" className="link" onClick={useLists}>use</button></div>}
