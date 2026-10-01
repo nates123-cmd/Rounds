@@ -20,12 +20,15 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
     : <span key="o" className="closed">closed{st.opens ? `, opens ${st.opens}` : ' now'}</span>)
   if (p.happy_hour) meta.push(<span key="h" className="hh">HH {p.happy_hour}</span>)
   if (p.google?.price && PRICE[p.google.price]) meta.push(<span key="p">{PRICE[p.google.price]}</span>)
-  if (p.moped_min != null) meta.push(<span key="m">{p.moped_min} min moped</span>)
-  else if (dist != null) meta.push(<span key="d">{fmtMiles(dist)}</span>)
   if (p.l_stop) meta.push(<span key="l" className="l">{p.l_stop}</span>)
   /* Unreviewed suggestions from Google: a quiet count that opens the sheet. Gone once the sheet is saved. */
   const pending = !p.reviewed_at && p.google?.atmo ? suggest(p).tags.length : 0
   if (pending) meta.push(<button key="s" type="button" className="link soft" onClick={onEdit}>{pending} suggested {pending === 1 ? 'tag' : 'tags'}</button>)
+
+  /* The price column: moped minutes when the poller has them, else straight-line distance. */
+  const mi = p.moped_min == null ? fmtMiles(dist) : null
+  const far = p.moped_min != null ? <>{p.moped_min}<small>MIN</small></>
+    : mi?.endsWith(' mi') ? <>{mi.slice(0, -3)}<small>MI</small></> : mi
 
   const why = p.status === 'fav'
     ? (p.note ? <p className="why back">{p.note}</p> : <p className="why none">what do you go back for?</p>)
@@ -43,7 +46,10 @@ export function Entry({ p, dist, who, onOpen, onWent, onEdit }) {
 
   return (
     <li className={`entry${p.status === 'pass' ? ' is-pass' : ''}${closed ? ' is-closed' : ''}`}>
-      <h2 className="name"><button className="name-btn" onClick={onEdit}>{p.name}</button></h2>
+      <div className="head">
+        <h2 className="name"><button className="name-btn" onClick={onEdit}>{p.name}</button></h2>
+        {far != null && <><span className="lead" aria-hidden="true" /><span className="far" title={p.moped_min != null ? 'minutes by moped from home' : 'straight-line distance'}>{far}</span></>}
+      </div>
       <div className="src-col">
         {p.rec_by ? <span className="src rec">Rec &middot; {p.rec_by}</span> : null}
         {listsOf(p).map((k) => <span key={k} className="src">{LIST_SOURCES[k]}</span>)}
